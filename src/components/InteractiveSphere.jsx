@@ -23,15 +23,34 @@ const InteractiveSphere = () => {
   const containerRef = useRef(null);
   const [tags, setTags] = useState([]);
   const [rot, setRot] = useState({ rx: 0.005, ry: 0.005 }); // Auto speed
+  const [radius, setRadius] = useState(180);
+  const [size, setSize] = useState(450);
   const mousePos = useRef({ x: 0, y: 0 });
   const isHovered = useRef(false);
 
-  // Initialize tags on a Fibonacci Sphere
+  // 1. Listen to screen size for sphere responsive scaling
   useEffect(() => {
-    const radius = 180;
+    const handleResize = () => {
+      if (window.innerWidth < 480) {
+        setRadius(95);
+        setSize(270);
+      } else if (window.innerWidth < 768) {
+        setRadius(135);
+        setSize(360);
+      } else {
+        setRadius(180);
+        setSize(450);
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    handleResize(); // Trigger immediately
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // 2. Initialize tags on a Fibonacci Sphere using the reactive radius
+  useEffect(() => {
     const numTags = SKILLS.length;
     const initialTags = SKILLS.map((skill, index) => {
-      // Golden ratio angle distribution
       const phi = Math.acos(-1 + (2 * index + 1) / numTags);
       const theta = Math.sqrt(numTags * Math.PI) * phi;
       
@@ -43,14 +62,13 @@ const InteractiveSphere = () => {
       };
     });
     setTags(initialTags);
-  }, []);
+  }, [radius]);
 
-  // Main rotation animation loop
+  // 3. Main rotation animation loop
   useEffect(() => {
     let animationFrameId;
 
     const rotateTags = () => {
-      // If hovered, speed is influenced by mouse coordinate distance from center
       let currentRx = rot.rx;
       let currentRy = rot.ry;
 
@@ -59,20 +77,17 @@ const InteractiveSphere = () => {
         const centerX = rect.left + rect.width / 2;
         const centerY = rect.top + rect.height / 2;
         
-        // Scale speed up to maximums
         currentRy = (mousePos.current.x - centerX) * 0.0001;
         currentRx = -(mousePos.current.y - centerY) * 0.0001;
       }
 
       setTags((prevTags) =>
         prevTags.map((tag) => {
-          // Rotate around Y-axis (ry)
           const cosY = Math.cos(currentRy);
           const sinY = Math.sin(currentRy);
           const x1 = tag.x * cosY - tag.z * sinY;
           const z1 = tag.x * sinY + tag.z * cosY;
 
-          // Rotate around X-axis (rx)
           const cosX = Math.cos(currentRx);
           const sinX = Math.sin(currentRx);
           const y2 = tag.y * cosX - z1 * sinX;
@@ -110,8 +125,8 @@ const InteractiveSphere = () => {
       onMouseLeave={handleMouseLeave}
       style={{
         position: 'relative',
-        width: '450px',
-        height: '450px',
+        width: `${size}px`,
+        height: `${size}px`,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -122,13 +137,9 @@ const InteractiveSphere = () => {
       }}
     >
       {tags.map((tag, index) => {
-        // Calculate scaling and opacity based on depth (Z)
-        // Depth range: from -180 to +180
-        const radius = 180;
-        const scale = 0.8 + ((tag.z + radius) / (2 * radius)) * 0.4; // Scale range: 0.8 to 1.2
-        const opacity = 0.2 + ((tag.z + radius) / (2 * radius)) * 0.8; // Opacity range: 0.2 to 1.0
-        
-        // Z-Index layering
+        // Calculate scaling and opacity dynamically based on current radius
+        const scale = 0.8 + ((tag.z + radius) / (2 * radius)) * 0.4;
+        const opacity = 0.2 + ((tag.z + radius) / (2 * radius)) * 0.8;
         const zIndex = Math.round(((tag.z + radius) / (2 * radius)) * 100);
 
         return (
@@ -140,7 +151,7 @@ const InteractiveSphere = () => {
               opacity: opacity,
               zIndex: zIndex,
               color: tag.color,
-              padding: '10px 18px',
+              padding: '8px 16px',
               borderRadius: '30px',
               background: 'rgba(15, 12, 28, 0.65)',
               border: `1px solid ${tag.color}33`,
@@ -148,9 +159,9 @@ const InteractiveSphere = () => {
               backdropFilter: 'blur(8px)',
               fontWeight: '600',
               fontFamily: 'var(--font-heading)',
-              fontSize: '0.95rem',
+              fontSize: '0.85rem',
               whiteSpace: 'nowrap',
-              pointerEvents: opacity < 0.4 ? 'none' : 'auto', // Backside elements can't be hovered
+              pointerEvents: opacity < 0.4 ? 'none' : 'auto',
               transition: 'box-shadow 0.3s ease, border-color 0.3s ease',
             }}
             className="sphere-tag"

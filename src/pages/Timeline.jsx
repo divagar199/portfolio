@@ -124,32 +124,38 @@ const Timeline = () => {
       >
         
         {/* Backdrop Static Line */}
-        <div style={{
-          position: 'absolute',
-          left: '50%',
-          top: 0,
-          bottom: 0,
-          width: '4px',
-          background: 'rgba(255, 255, 255, 0.05)',
-          transform: 'translateX(-50%)',
-          zIndex: 1,
-          borderRadius: '4px'
-        }} />
+        <div 
+          className="timeline-axis"
+          style={{
+            position: 'absolute',
+            left: '50%',
+            top: 0,
+            bottom: 0,
+            width: '4px',
+            background: 'rgba(255, 255, 255, 0.05)',
+            transform: 'translateX(-50%)',
+            zIndex: 1,
+            borderRadius: '4px'
+          }} 
+        />
 
         {/* Animated Drawing Path */}
-        <div style={{
-          position: 'absolute',
-          left: '50%',
-          top: 0,
-          height: `${scrollProgress * 100}%`,
-          width: '4px',
-          background: 'linear-gradient(to bottom, var(--color-pink) 0%, var(--color-cyan) 60%, var(--color-violet) 100%)',
-          boxShadow: '0 0 10px rgba(6, 182, 212, 0.5)',
-          transform: 'translateX(-50%)',
-          zIndex: 2,
-          transition: 'height 0.1s ease-out',
-          borderRadius: '4px'
-        }} />
+        <div 
+          className="timeline-axis"
+          style={{
+            position: 'absolute',
+            left: '50%',
+            top: 0,
+            height: `${scrollProgress * 100}%`,
+            width: '4px',
+            background: 'linear-gradient(to bottom, var(--color-pink) 0%, var(--color-cyan) 60%, var(--color-violet) 100%)',
+            boxShadow: '0 0 10px rgba(6, 182, 212, 0.5)',
+            transform: 'translateX(-50%)',
+            zIndex: 2,
+            transition: 'height 0.1s ease-out',
+            borderRadius: '4px'
+          }} 
+        />
 
         {/* Timeline Items Alternating Left/Right */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '80px', position: 'relative', zIndex: 3 }}>
@@ -160,6 +166,7 @@ const Timeline = () => {
             return (
               <div
                 key={item.id}
+                className="timeline-row"
                 style={{
                   display: 'flex',
                   justifyContent: isLeft ? 'flex-start' : 'flex-end',
@@ -170,6 +177,7 @@ const Timeline = () => {
                 
                 {/* Visual Indicator Node on Center Line */}
                 <div
+                  className="timeline-node"
                   style={{
                     position: 'absolute',
                     left: '50%',
@@ -282,18 +290,22 @@ const Timeline = () => {
           #timeline-container {
             padding: 40px 10px !important;
           }
-          /* Align line to the left edge on mobile */
-          div[style*="left: 50%"] {
+          /* Align line axis to the left edge on mobile */
+          .timeline-axis {
             left: 20px !important;
             transform: none !important;
+          }
+          /* Align nodes to the left edge on mobile */
+          .timeline-node {
+            left: 20px !important;
+            transform: translateX(-50%) !important;
           }
           /* Card container displays full-width on mobile */
           .timeline-card-wrapper {
             width: calc(100% - 40px) !important;
             margin-left: 40px !important;
           }
-          div[style*="justify-content: flex-start"],
-          div[style*="justify-content: flex-end"] {
+          .timeline-row {
             justify-content: flex-start !important;
           }
         }

@@ -11,6 +11,7 @@ const PROJECTS_DATA = [
     subtitle: 'Full-Stack Digital Bookstore Platform',
     icon: BookOpen,
     color: 'var(--color-cyan)',
+    image: '/kuviyal_mockup.png',
     desc: 'Architected a highly scalable e-commerce platform dedicated to digital literature. Engineered to support smooth transaction pipelines, secure accounts, and instant digital asset delivery.',
     techs: ['React.js', 'MongoDB', 'Firebase Auth', 'Supabase Storage', 'Razorpay API', 'Tailwind CSS'],
     achievements: [
@@ -28,6 +29,7 @@ const PROJECTS_DATA = [
     subtitle: 'Pixel-Perfect Mobile-First Frontend',
     icon: Compass,
     color: 'var(--color-pink)',
+    image: '/tripadvisor_mockup.png',
     desc: 'Engineered a highly responsive, visual clone of TripAdvisor. Recreated from scratch prioritizing extreme rendering optimizations, clean animations, and structural accuracy on all device ports.',
     techs: ['HTML5', 'CSS3', 'JavaScript (ES6+)', 'Complex DOM APIs', 'Mobile-First Grid'],
     achievements: [
@@ -73,7 +75,7 @@ const Projects = () => {
       {/* Grid of Projects */}
       <div style={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(480px, 1fr))',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 450px), 1fr))',
         gap: '40px',
         width: '100%',
         boxSizing: 'border-box'
@@ -101,6 +103,41 @@ const Projects = () => {
                 }}
               >
                 
+                {/* Project Visual Image Banner */}
+                <div style={{
+                  width: '100%',
+                  height: '210px',
+                  borderRadius: '12px',
+                  overflow: 'hidden',
+                  border: '1px solid rgba(255, 255, 255, 0.08)',
+                  position: 'relative',
+                  background: 'rgba(0, 0, 0, 0.2)',
+                  flexShrink: 0
+                }}>
+                  <img
+                    src={proj.image}
+                    alt={proj.title}
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      transition: 'transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1)'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = 'scale(1.06)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'scale(1)';
+                    }}
+                  />
+                  <div style={{
+                    position: 'absolute',
+                    inset: 0,
+                    background: 'linear-gradient(to bottom, transparent 55%, rgba(15, 12, 28, 0.95) 100%)',
+                    pointerEvents: 'none'
+                  }} />
+                </div>
+
                 {/* Header Row */}
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>

@@ -101,6 +101,16 @@ const Navigation = () => {
             padding: 12px !important;
           }
         }
+        @media (max-width: 380px) {
+          .nav-link-item {
+            padding: 10px !important;
+          }
+          nav {
+            gap: 2px !important;
+            padding: 6px 12px !important;
+            bottom: 15px !important;
+          }
+        }
       `}</style>
     </nav>
   );

@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import TiltCard from '../components/TiltCard';
-import { GraduationCap, Award, Calendar, ChevronLeft, ChevronRight, CheckCircle, BookOpen } from 'lucide-react';
+import { GraduationCap, Award, Calendar, ChevronLeft, ChevronRight, BookOpen } from 'lucide-react';
 
 const CAROUSEL_ITEMS = [
   {
@@ -55,6 +55,22 @@ const CAROUSEL_ITEMS = [
 
 const Education = () => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const isMobile = windowWidth < 480;
+  const isTablet = windowWidth >= 480 && windowWidth < 768;
+
+  // Mathematically scale card dimensions and 3D depth spacing dynamically based on viewport widths
+  const cardHeight = isMobile ? 440 : isTablet ? 400 : 380;
+  const xOffset = isMobile ? 40 : isTablet ? 110 : 180;
+  const zOffset = isMobile ? -140 : isTablet ? -160 : -180;
+  const scaleOffset = isMobile ? 0.8 : 0.9;
 
   const handleNext = () => {
     setActiveIndex((prev) => (prev + 1) % CAROUSEL_ITEMS.length);
@@ -105,7 +121,7 @@ const Education = () => {
         justifyContent: 'center',
         flexGrow: 1,
         width: '100%',
-        height: '480px',
+        height: `${cardHeight + 100}px`,
         marginTop: '20px',
         boxSizing: 'border-box'
       }}>
@@ -115,7 +131,7 @@ const Education = () => {
           position: 'relative',
           width: '100%',
           maxWidth: '560px',
-          height: '380px',
+          height: `${cardHeight}px`,
           perspective: '1200px',
           transformStyle: 'preserve-3d',
         }}>
@@ -138,19 +154,19 @@ const Education = () => {
             let zIndex = 1;
             
             if (isActive) {
-              translate3d = 'translate3d(0px, 0px, 50px)';
+              translate3d = 'translate3d(0px, 0px, 50px) scale(1)';
               rotateY = '0deg';
               opacity = 1;
               zIndex = 10;
             } else if (isBehindLeft) {
-              translate3d = 'translate3d(-180px, 0px, -180px)';
+              translate3d = `translate3d(${-xOffset}px, 0px, ${zOffset}px) scale(${scaleOffset})`;
               rotateY = '25deg';
-              opacity = 0.45;
+              opacity = isMobile ? 0.12 : 0.45;
               zIndex = 5;
             } else if (isBehindRight) {
-              translate3d = 'translate3d(180px, 0px, -180px)';
+              translate3d = `translate3d(${xOffset}px, 0px, ${zOffset}px) scale(${scaleOffset})`;
               rotateY = '-25deg';
-              opacity = 0.45;
+              opacity = isMobile ? 0.12 : 0.45;
               zIndex = 5;
             }
 
@@ -340,26 +356,11 @@ const Education = () => {
 
       <style>{`
         @media (max-width: 640px) {
-          div[style*="height: 380px"] {
-            height: 420px !important;
-          }
-          div[style*="height: 480px"] {
-            height: 520px !important;
-          }
           .glass-card {
             padding: 24px !important;
           }
           h2 {
             font-size: 1.35rem !important;
-          }
-          /* Compress side cards on thin screens to avoid horizontal overflow */
-          div[style*="translate3d(-180px"] {
-            transform: translate3d(-80px, 0px, -200px) rotateY(40deg) !important;
-            opacity: 0.2 !important;
-          }
-          div[style*="translate3d(180px"] {
-            transform: translate3d(80px, 0px, -200px) rotateY(-40deg) !important;
-            opacity: 0.2 !important;
           }
         }
       `}</style>
