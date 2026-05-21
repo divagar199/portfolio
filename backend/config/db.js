@@ -49,8 +49,13 @@ const SEED_DATA = {
     },
     {
       id: "skills-cat-4",
-      category: "AI & Productivity",
-      skills: ["ChatGPT", "Google Gemini", "Prompt Engineering", "Git", "Vercel", "Render"]
+      category: "AI & Prompt Engineering",
+      skills: ["ChatGPT", "Google Gemini", "Prompt Engineering"]
+    },
+    {
+      id: "skills-cat-5",
+      category: "Productivity & Tools",
+      skills: ["Git", "Vercel", "Render"]
     }
   ],
   experiences: [

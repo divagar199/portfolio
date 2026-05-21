@@ -37,11 +37,17 @@
   },
   {
     "id": "skills-cat-4",
-    "category": "AI & Productivity",
+    "category": "AI & Prompt Engineering",
     "skills": [
       "ChatGPT",
       "Google Gemini",
-      "Prompt Engineering",
+      "Prompt Engineering"
+    ]
+  },
+  {
+    "id": "skills-cat-5",
+    "category": "Productivity & Tools",
+    "skills": [
       "Git",
       "Vercel",
       "Render"

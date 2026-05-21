@@ -747,7 +747,7 @@ const AdminPortal = ({
                       type="text" 
                       className="admin-input" 
                       required 
-                      placeholder="e.g. Frontend, Backend, AI & Productivity"
+                      placeholder="e.g. Frontend, Backend, AI & Prompt Engineering, Productivity & Tools"
                       value={category}
                       onChange={(e) => setCategory(e.target.value)}
                     />
