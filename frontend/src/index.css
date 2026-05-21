@@ -439,6 +439,18 @@ p {
   box-shadow: 0 0 15px rgba(223, 209, 188, 0.2);
 }
 
+.cta-button.secondary {
+  background-color: transparent;
+  color: var(--text-primary);
+  border-color: rgba(223, 209, 188, 0.2);
+}
+
+.cta-button.secondary:hover {
+  background-color: rgba(223, 209, 188, 0.05);
+  border-color: var(--accent-color);
+  color: var(--accent-color);
+}
+
 /* Mobile Nav Toggle Icon */
 .nav-toggle {
   display: none;
@@ -561,6 +573,22 @@ p {
 }
 
 .social-pill:hover .icon {
+  transform: scale(1.1) rotate(-8deg);
+}
+
+.social-pill.highlight-pill {
+  border-color: rgba(223, 209, 188, 0.25);
+  background-color: rgba(223, 209, 188, 0.03);
+}
+
+.social-pill.highlight-pill:hover {
+  background-color: var(--accent-color);
+  color: var(--bg-color);
+  border-color: var(--accent-color);
+  box-shadow: 0 0 25px rgba(223, 209, 188, 0.3);
+}
+
+.social-pill.highlight-pill:hover .icon {
   transform: scale(1.1) rotate(-8deg);
 }
 
