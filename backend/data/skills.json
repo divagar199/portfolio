@@ -1,0 +1,50 @@
+[
+  {
+    "id": "skills-cat-0",
+    "category": "Frontend",
+    "skills": [
+      "React.js",
+      "HTML5",
+      "CSS3",
+      "JavaScript ES6+",
+      "Tailwind CSS"
+    ]
+  },
+  {
+    "id": "skills-cat-1",
+    "category": "Backend & APIs",
+    "skills": [
+      "Node.js",
+      "Express.js",
+      "REST APIs"
+    ]
+  },
+  {
+    "id": "skills-cat-2",
+    "category": "Database",
+    "skills": [
+      "MongoDB"
+    ]
+  },
+  {
+    "id": "skills-cat-3",
+    "category": "Cloud & Integration",
+    "skills": [
+      "Firebase",
+      "Supabase",
+      "Razorpay API"
+    ]
+  },
+  {
+    "id": "skills-cat-4",
+    "category": "AI & Productivity",
+    "skills": [
+      "ChatGPT",
+      "Google Gemini",
+      "Prompt Engineering",
+      "Git",
+      "Vercel",
+      "Render"
+    ]
+  }
+]

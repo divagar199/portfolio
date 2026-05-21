@@ -1,0 +1,20 @@
+[
+  {
+    "id": "cert-0",
+    "title": "MERN Full Stack Developer",
+    "issuer": "Professional Certification",
+    "desc": "Detailed mastery in structuring React frontends, Express APIs, Node execution contexts, and MongoDB clusters."
+  },
+  {
+    "id": "cert-1",
+    "title": "Prompt Engineering Course",
+    "issuer": "Advanced AI Systems",
+    "desc": "Formulating advanced templates, multi-shot styling, and role constraints to streamline high-quality coding deliverables."
+  },
+  {
+    "id": "cert-2",
+    "title": "Power BI Master Certification",
+    "issuer": "Data Analysis & Visuals",
+    "desc": "Data cleaning pipelines, interactive dashboard modeling, DAX query logic, and robust business visual analytics."
+  }
+]

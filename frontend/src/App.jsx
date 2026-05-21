@@ -10,8 +10,13 @@ const App = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [loadPercentage, setLoadPercentage] = useState(0);
 
-  // Global project state synced with server
+  // Global MERN dynamic states synced with server
   const [projects, setProjects] = useState([]);
+  const [skills, setSkills] = useState([]);
+  const [experiences, setExperiences] = useState([]);
+  const [education, setEducation] = useState([]);
+  const [certifications, setCertifications] = useState([]);
+  
   const [isAdmin, setIsAdmin] = useState(false);
   const [isAdminPortalOpen, setIsAdminPortalOpen] = useState(false);
   
@@ -99,8 +104,205 @@ const App = () => {
     }
   };
 
-  useEffect(() => {
+  const fetchSkills = async () => {
+    try {
+      const response = await fetch(`${API_BASE}/api/skills`);
+      if (response.ok) {
+        const data = await response.json();
+        setSkills(data);
+      } else {
+        loadSkillsFallback();
+      }
+    } catch (err) {
+      console.warn("Backend API offline, loading skills fallback:", err.message);
+      loadSkillsFallback();
+    }
+  };
+
+  const loadSkillsFallback = () => {
+    const cached = localStorage.getItem('divagar_skills');
+    if (cached) {
+      setSkills(JSON.parse(cached));
+    } else {
+      const defaults = [
+        {
+          id: "skills-cat-0",
+          category: "Frontend",
+          skills: ["React.js", "HTML5", "CSS3", "JavaScript ES6+", "Tailwind CSS"]
+        },
+        {
+          id: "skills-cat-1",
+          category: "Backend & APIs",
+          skills: ["Node.js", "Express.js", "REST APIs"]
+        },
+        {
+          id: "skills-cat-2",
+          category: "Database",
+          skills: ["MongoDB"]
+        },
+        {
+          id: "skills-cat-3",
+          category: "Cloud & Integration",
+          skills: ["Firebase", "Supabase", "Razorpay API"]
+        },
+        {
+          id: "skills-cat-4",
+          category: "AI & Productivity",
+          skills: ["ChatGPT", "Google Gemini", "Prompt Engineering", "Git", "Vercel", "Render"]
+        }
+      ];
+      setSkills(defaults);
+      localStorage.setItem('divagar_skills', JSON.stringify(defaults));
+    }
+  };
+
+  const fetchExperiences = async () => {
+    try {
+      const response = await fetch(`${API_BASE}/api/experiences`);
+      if (response.ok) {
+        const data = await response.json();
+        setExperiences(data);
+      } else {
+        loadExperiencesFallback();
+      }
+    } catch (err) {
+      console.warn("Backend API offline, loading experiences fallback:", err.message);
+      loadExperiencesFallback();
+    }
+  };
+
+  const loadExperiencesFallback = () => {
+    const cached = localStorage.getItem('divagar_experiences');
+    if (cached) {
+      setExperiences(JSON.parse(cached));
+    } else {
+      const defaults = [
+        {
+          id: "exp-0",
+          role: "Floor Manager",
+          company: "V-Mart Retail Ltd",
+          duration: "APR 2025 - SEP 2025",
+          location: "Coimbatore",
+          desc: "Spearheaded store floor activities and inventory workflows, cultivating seamless operations and high performance. Handled visual layouts, stock management, and team synchronization, refining outstanding organizational and agile troubleshooting abilities in high-intensity settings."
+        },
+        {
+          id: "exp-1",
+          role: "Sales Executive",
+          company: "Zink London (Pantaloons)",
+          duration: "JUL 2023 - APR 2025",
+          location: "Tiruppur",
+          desc: "Drove commercial performance, client interaction, and customer satisfaction. Strengthened key skills in proactive engagement, customer relation frameworks, and data tracking, enhancing interpersonal communications and goal-focused strategic planning."
+        },
+        {
+          id: "exp-2",
+          role: "Sales Assistant",
+          company: "Max Fashion India",
+          duration: "JUN 2020 - OCT 2021",
+          location: "Tiruppur",
+          desc: "Assisted customers, managed shelf displays, and handled front-end transactions. Fostered collaborative capabilities, active problem resolution techniques, and customer experience methodologies."
+        }
+      ];
+      setExperiences(defaults);
+      localStorage.setItem('divagar_experiences', JSON.stringify(defaults));
+    }
+  };
+
+  const fetchEducation = async () => {
+    try {
+      const response = await fetch(`${API_BASE}/api/education`);
+      if (response.ok) {
+        const data = await response.json();
+        setEducation(data);
+      } else {
+        loadEducationFallback();
+      }
+    } catch (err) {
+      console.warn("Backend API offline, loading education fallback:", err.message);
+      loadEducationFallback();
+    }
+  };
+
+  const loadEducationFallback = () => {
+    const cached = localStorage.getItem('divagar_education');
+    if (cached) {
+      setEducation(JSON.parse(cached));
+    } else {
+      const defaults = [
+        {
+          id: "edu-0",
+          degree: "M.Sc. in Computer Science",
+          college: "Park's College",
+          duration: "2023 - 2025",
+          details: "Acquired advanced knowledge in database administration, software modeling, computer networks, and full-stack systems architecture. Specialized in leveraging MERN stack integrations and cloud architectures."
+        },
+        {
+          id: "edu-1",
+          degree: "BCA (Bachelor of Computer Applications)",
+          college: "Park's College",
+          duration: "2020 - 2023",
+          details: "Established robust fundamental concepts in object-oriented programming, data structures, UI design, web layouts, and SQL query scripting."
+        }
+      ];
+      setEducation(defaults);
+      localStorage.setItem('divagar_education', JSON.stringify(defaults));
+    }
+  };
+
+  const fetchCertifications = async () => {
+    try {
+      const response = await fetch(`${API_BASE}/api/certifications`);
+      if (response.ok) {
+        const data = await response.json();
+        setCertifications(data);
+      } else {
+        loadCertificationsFallback();
+      }
+    } catch (err) {
+      console.warn("Backend API offline, loading certifications fallback:", err.message);
+      loadCertificationsFallback();
+    }
+  };
+
+  const loadCertificationsFallback = () => {
+    const cached = localStorage.getItem('divagar_certifications');
+    if (cached) {
+      setCertifications(JSON.parse(cached));
+    } else {
+      const defaults = [
+        {
+          id: "cert-0",
+          title: "MERN Full Stack Developer",
+          issuer: "Professional Certification",
+          desc: "Detailed mastery in structuring React frontends, Express APIs, Node execution contexts, and MongoDB clusters."
+        },
+        {
+          id: "cert-1",
+          title: "Prompt Engineering Course",
+          issuer: "Advanced AI Systems",
+          desc: "Formulating advanced templates, multi-shot styling, and role constraints to streamline high-quality coding deliverables."
+        },
+        {
+          id: "cert-2",
+          title: "Power BI Master Certification",
+          issuer: "Data Analysis & Visuals",
+          desc: "Data cleaning pipelines, interactive dashboard modeling, DAX query logic, and robust business visual analytics."
+        }
+      ];
+      setCertifications(defaults);
+      localStorage.setItem('divagar_certifications', JSON.stringify(defaults));
+    }
+  };
+
+  const fetchAllData = async () => {
     fetchAllProjects();
+    fetchSkills();
+    fetchExperiences();
+    fetchEducation();
+    fetchCertifications();
+  };
+
+  useEffect(() => {
+    fetchAllData();
     const token = sessionStorage.getItem('admin_token');
     if (token === 'active_session') {
       setIsAdmin(true);
@@ -448,137 +650,63 @@ const App = () => {
             </div>
 
             <div className="skills-grid">
-              {/* Category 1: Frontend */}
-              <div 
-                className="skills-card scroll-reveal reveal-visible"
-                id="skills-card-0"
-                onMouseMove={(e) => updateCardGlow(e, 0)}
-              >
-                <div className="skills-card-glow"></div>
-                <div className="skills-card-content">
-                  <div className="skills-category-header">
-                    <div className="skills-icon-wrapper">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                        <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
-                        <polyline points="2 17 12 22 22 17"></polyline>
-                        <polyline points="2 12 12 17 22 12"></polyline>
-                      </svg>
+              {skills.map((cat, idx) => (
+                <div 
+                  className="skills-card scroll-reveal reveal-visible"
+                  key={cat.id || idx}
+                  id={`skills-card-${idx}`}
+                  onMouseMove={(e) => updateCardGlow(e, idx)}
+                >
+                  <div className="skills-card-glow"></div>
+                  <div className="skills-card-content">
+                    <div className="skills-category-header">
+                      <div className="skills-icon-wrapper">
+                        {cat.category.toLowerCase().includes('front') ? (
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                            <polyline points="2 17 12 22 22 17"></polyline>
+                            <polyline points="2 12 12 17 22 12"></polyline>
+                          </svg>
+                        ) : cat.category.toLowerCase().includes('back') ? (
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                            <rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect>
+                            <rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect>
+                            <line x1="6" y1="6" x2="6.01" y2="6"></line>
+                            <line x1="6" y1="18" x2="6.01" y2="18"></line>
+                          </svg>
+                        ) : cat.category.toLowerCase().includes('data') ? (
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                            <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+                            <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+                            <path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"></path>
+                          </svg>
+                        ) : cat.category.toLowerCase().includes('cloud') ? (
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                            <path d="M18 10h-1.25V7.25a4.75 4.75 0 1 0-9.5 0V10H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8a2 2 0 0 0-18 10zm-9.25-2.75a2.75 2.75 0 1 1 5.5 0V10h-5.5z"></path>
+                          </svg>
+                        ) : (
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l-7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                            <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                          </svg>
+                        )}
+                      </div>
+                      <h3 className="skills-category-title">{cat.category}</h3>
                     </div>
-                    <h3 className="skills-category-title">Frontend</h3>
+                    <ul className="skills-badge-list">
+                      {cat.skills && cat.skills.map((skill, sIdx) => {
+                        const isHigh = skill.toLowerCase().includes('chatgpt') || skill.toLowerCase().includes('gemini') || skill.toLowerCase().includes('prompt');
+                        return (
+                          <li className={`skill-badge ${isHigh ? 'highlight-badge' : ''}`} key={sIdx}>
+                            <span className="bullet"></span> {skill}
+                          </li>
+                        );
+                      })}
+                    </ul>
                   </div>
-                  <ul className="skills-badge-list">
-                    <li className="skill-badge"><span className="bullet"></span> React.js</li>
-                    <li className="skill-badge"><span className="bullet"></span> HTML5</li>
-                    <li className="skill-badge"><span className="bullet"></span> CSS3</li>
-                    <li className="skill-badge"><span className="bullet"></span> JavaScript <span className="mono-sub">ES6+</span></li>
-                    <li className="skill-badge"><span className="bullet"></span> Tailwind CSS</li>
-                  </ul>
                 </div>
-              </div>
-
-              {/* Category 2: Backend */}
-              <div 
-                className="skills-card scroll-reveal reveal-visible"
-                id="skills-card-1"
-                onMouseMove={(e) => updateCardGlow(e, 1)}
-              >
-                <div className="skills-card-glow"></div>
-                <div className="skills-card-content">
-                  <div className="skills-category-header">
-                    <div className="skills-icon-wrapper">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                        <rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect>
-                        <rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect>
-                        <line x1="6" y1="6" x2="6.01" y2="6"></line>
-                        <line x1="6" y1="18" x2="6.01" y2="18"></line>
-                      </svg>
-                    </div>
-                    <h3 className="skills-category-title">Backend & APIs</h3>
-                  </div>
-                  <ul className="skills-badge-list">
-                    <li className="skill-badge"><span className="bullet"></span> Node.js</li>
-                    <li className="skill-badge"><span className="bullet"></span> Express.js</li>
-                    <li className="skill-badge"><span className="bullet"></span> REST APIs</li>
-                  </ul>
-                </div>
-              </div>
-
-              {/* Category 3: Database */}
-              <div 
-                className="skills-card scroll-reveal reveal-visible"
-                id="skills-card-2"
-                onMouseMove={(e) => updateCardGlow(e, 2)}
-              >
-                <div className="skills-card-glow"></div>
-                <div className="skills-card-content">
-                  <div className="skills-category-header">
-                    <div className="skills-icon-wrapper">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                        <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
-                        <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
-                        <path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"></path>
-                      </svg>
-                    </div>
-                    <h3 className="skills-category-title">Database</h3>
-                  </div>
-                  <ul className="skills-badge-list">
-                    <li className="skill-badge"><span className="bullet"></span> MongoDB</li>
-                  </ul>
-                </div>
-              </div>
-
-              {/* Category 4: Cloud & Integrations */}
-              <div 
-                className="skills-card scroll-reveal reveal-visible"
-                id="skills-card-3"
-                onMouseMove={(e) => updateCardGlow(e, 3)}
-              >
-                <div className="skills-card-glow"></div>
-                <div className="skills-card-content">
-                  <div className="skills-category-header">
-                    <div className="skills-icon-wrapper">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                        <path d="M18 10h-1.25V7.25a4.75 4.75 0 1 0-9.5 0V10H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8a2 2 0 0 0-18 10zm-9.25-2.75a2.75 2.75 0 1 1 5.5 0V10h-5.5z"></path>
-                      </svg>
-                    </div>
-                    <h3 className="skills-category-title">Cloud & Integration</h3>
-                  </div>
-                  <ul className="skills-badge-list">
-                    <li className="skill-badge"><span className="bullet"></span> Firebase</li>
-                    <li className="skill-badge"><span className="bullet"></span> Supabase</li>
-                    <li className="skill-badge"><span className="bullet"></span> Razorpay API</li>
-                  </ul>
-                </div>
-              </div>
-
-              {/* Category 5: AI & Productivity */}
-              <div 
-                className="skills-card scroll-reveal reveal-visible"
-                id="skills-card-4"
-                onMouseMove={(e) => updateCardGlow(e, 4)}
-              >
-                <div className="skills-card-glow"></div>
-                <div className="skills-card-content">
-                  <div className="skills-category-header">
-                    <div className="skills-icon-wrapper">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l-7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-                        <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
-                        <line x1="12" y1="22.08" x2="12" y2="12"></line>
-                      </svg>
-                    </div>
-                    <h3 className="skills-category-title">AI & Productivity</h3>
-                  </div>
-                  <ul className="skills-badge-list">
-                    <li className="skill-badge highlight-badge"><span className="bullet"></span> ChatGPT</li>
-                    <li className="skill-badge highlight-badge"><span className="bullet"></span> Google Gemini</li>
-                    <li className="skill-badge highlight-badge"><span className="bullet"></span> Prompt Engineering</li>
-                    <li className="skill-badge"><span className="bullet"></span> Git</li>
-                    <li className="skill-badge"><span className="bullet"></span> Vercel</li>
-                    <li className="skill-badge"><span className="bullet"></span> Render</li>
-                  </ul>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </section>
@@ -621,77 +749,28 @@ const App = () => {
             <div className="timeline-container">
               <div className="timeline-line"></div>
 
-              {/* Experience Node 1 */}
-              <div className="timeline-item scroll-reveal reveal-visible">
-                <div className="timeline-dot-wrapper">
-                  <div className="timeline-dot"></div>
-                </div>
-                <div className="timeline-card">
-                  <div className="timeline-header-meta">
-                    <span className="timeline-date mono-tag">APR 2025 - SEP 2025</span>
-                    <span className="timeline-location mono-tag">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="loc-icon">
-                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                        <circle cx="12" cy="10" r="3"></circle>
-                      </svg> 
-                      Coimbatore
-                    </span>
+              {experiences.map((exp, idx) => (
+                <div className="timeline-item scroll-reveal reveal-visible" key={exp.id || idx}>
+                  <div className="timeline-dot-wrapper">
+                    <div className="timeline-dot"></div>
                   </div>
-                  <h3 className="timeline-role">Floor Manager</h3>
-                  <h4 className="timeline-company">V-Mart Retail Ltd</h4>
-                  <p className="timeline-desc">
-                    Spearheaded store floor activities and inventory workflows, cultivating seamless operations and high performance. Handled visual layouts, stock management, and team synchronization, refining outstanding organizational and agile troubleshooting abilities in high-intensity settings.
-                  </p>
-                </div>
-              </div>
-
-              {/* Experience Node 2 */}
-              <div className="timeline-item scroll-reveal reveal-visible">
-                <div className="timeline-dot-wrapper">
-                  <div className="timeline-dot"></div>
-                </div>
-                <div className="timeline-card">
-                  <div className="timeline-header-meta">
-                    <span className="timeline-date mono-tag">JUL 2023 - APR 2025</span>
-                    <span className="timeline-location mono-tag">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="loc-icon">
-                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                        <circle cx="12" cy="10" r="3"></circle>
-                      </svg> 
-                      Tiruppur
-                    </span>
+                  <div className="timeline-card">
+                    <div className="timeline-header-meta">
+                      <span className="timeline-date mono-tag">{exp.duration}</span>
+                      <span className="timeline-location mono-tag">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="loc-icon">
+                          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                          <circle cx="12" cy="10" r="3"></circle>
+                        </svg> 
+                        {exp.location}
+                      </span>
+                    </div>
+                    <h3 className="timeline-role">{exp.role}</h3>
+                    <h4 className="timeline-company">{exp.company}</h4>
+                    <p className="timeline-desc">{exp.desc}</p>
                   </div>
-                  <h3 className="timeline-role">Sales Executive</h3>
-                  <h4 className="timeline-company">Zink London (Pantaloons)</h4>
-                  <p className="timeline-desc">
-                    Drove commercial performance, client interaction, and customer satisfaction. Strengthened key skills in proactive engagement, customer relation frameworks, and data tracking, enhancing interpersonal communications and goal-focused strategic planning.
-                  </p>
                 </div>
-              </div>
-
-              {/* Experience Node 3 */}
-              <div className="timeline-item scroll-reveal reveal-visible">
-                <div className="timeline-dot-wrapper">
-                  <div className="timeline-dot"></div>
-                </div>
-                <div className="timeline-card">
-                  <div className="timeline-header-meta">
-                    <span className="timeline-date mono-tag">JUN 2020 - OCT 2021</span>
-                    <span className="timeline-location mono-tag">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="loc-icon">
-                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                        <circle cx="12" cy="10" r="3"></circle>
-                      </svg> 
-                      Tiruppur
-                    </span>
-                  </div>
-                  <h3 className="timeline-role">Sales Assistant</h3>
-                  <h4 className="timeline-company">Max Fashion India</h4>
-                  <p className="timeline-desc">
-                    Assisted customers, managed shelf displays, and handled front-end transactions. Fostered collaborative capabilities, active problem resolution techniques, and customer experience methodologies.
-                  </p>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </section>
@@ -709,27 +788,16 @@ const App = () => {
                 </div>
 
                 <div className="edu-timeline">
-                  <div className="edu-card">
-                    <div className="edu-meta">
-                      <span className="edu-duration mono-tag">2023 - 2025</span>
+                  {education.map((edu, idx) => (
+                    <div className="edu-card" key={edu.id || idx}>
+                      <div className="edu-meta">
+                        <span className="edu-duration mono-tag">{edu.duration}</span>
+                      </div>
+                      <h3 className="edu-degree">{edu.degree}</h3>
+                      <span className="edu-college">{edu.college}</span>
+                      <p className="edu-details">{edu.details}</p>
                     </div>
-                    <h3 className="edu-degree">M.Sc. in Computer Science</h3>
-                    <span className="edu-college">Park's College</span>
-                    <p className="edu-details">
-                      Acquired advanced knowledge in database administration, software modeling, computer networks, and full-stack systems architecture. Specialized in leveraging MERN stack integrations and cloud architectures.
-                    </p>
-                  </div>
-
-                  <div className="edu-card">
-                    <div className="edu-meta">
-                      <span className="edu-duration mono-tag">2020 - 2023</span>
-                    </div>
-                    <h3 className="edu-degree">BCA (Bachelor of Computer Applications)</h3>
-                    <span className="edu-college">Park's College</span>
-                    <p className="edu-details">
-                      Established robust fundamental concepts in object-oriented programming, data structures, UI design, web layouts, and SQL query scripting.
-                    </p>
-                  </div>
+                  ))}
                 </div>
               </div>
 
@@ -741,46 +809,20 @@ const App = () => {
                 </div>
 
                 <div className="certs-container">
-                  <div className="cert-card">
-                    <div className="cert-icon-wrapper">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                      </svg>
+                  {certifications.map((cert, idx) => (
+                    <div className="cert-card" key={cert.id || idx}>
+                      <div className="cert-icon-wrapper">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                        </svg>
+                      </div>
+                      <div className="cert-info">
+                        <h3 className="cert-title">{cert.title}</h3>
+                        <span className="cert-issuer mono-tag">{cert.issuer}</span>
+                        <p className="cert-desc">{cert.desc}</p>
+                      </div>
                     </div>
-                    <div className="cert-info">
-                      <h3 className="cert-title">MERN Full Stack Developer</h3>
-                      <span className="cert-issuer mono-tag">Professional Certification</span>
-                      <p className="cert-desc">Detailed mastery in structuring React frontends, Express APIs, Node execution contexts, and MongoDB clusters.</p>
-                    </div>
-                  </div>
-
-                  <div className="cert-card">
-                    <div className="cert-icon-wrapper">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-                        <line x1="12" y1="17" x2="12.01" y2="17"></line>
-                      </svg>
-                    </div>
-                    <div className="cert-info">
-                      <h3 className="cert-title">Prompt Engineering Course</h3>
-                      <span className="cert-issuer mono-tag">Advanced AI Systems</span>
-                      <p className="cert-desc">Formulating advanced templates, multi-shot styling, and role constraints to streamline high-quality coding deliverables.</p>
-                    </div>
-                  </div>
-
-                  <div className="cert-card">
-                    <div className="cert-icon-wrapper">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                        <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
-                      </svg>
-                    </div>
-                    <div className="cert-info">
-                      <h3 className="cert-title">Power BI Master Certification</h3>
-                      <span className="cert-issuer mono-tag">Data Analysis & Visuals</span>
-                      <p className="cert-desc">Data cleaning pipelines, interactive dashboard modeling, DAX query logic, and robust business visual analytics.</p>
-                    </div>
-                  </div>
+                  ))}
                 </div>
               </div>
             </div>
@@ -829,7 +871,11 @@ const App = () => {
         isOpen={isAdminPortalOpen}
         onClose={() => setIsAdminPortalOpen(false)}
         projects={projects}
-        onRefresh={fetchAllProjects}
+        skills={skills}
+        experiences={experiences}
+        education={education}
+        certifications={certifications}
+        onRefresh={fetchAllData}
         onNotify={handleAdminStatusChange}
       />
 

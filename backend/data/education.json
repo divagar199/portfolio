@@ -1,0 +1,16 @@
+[
+  {
+    "id": "edu-0",
+    "degree": "M.Sc. in Computer Science",
+    "college": "Park's College",
+    "duration": "2023 - 2025",
+    "details": "Acquired advanced knowledge in database administration, software modeling, computer networks, and full-stack systems architecture. Specialized in leveraging MERN stack integrations and cloud architectures."
+  },
+  {
+    "id": "edu-1",
+    "degree": "BCA (Bachelor of Computer Applications)",
+    "college": "Park's College",
+    "duration": "2020 - 2023",
+    "details": "Established robust fundamental concepts in object-oriented programming, data structures, UI design, web layouts, and SQL query scripting."
+  }
+]

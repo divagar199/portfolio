@@ -1,0 +1,26 @@
+[
+  {
+    "id": "exp-0",
+    "role": "Floor Manager",
+    "company": "V-Mart Retail Ltd",
+    "duration": "APR 2025 - SEP 2025",
+    "location": "Coimbatore",
+    "desc": "Spearheaded store floor activities and inventory workflows, cultivating seamless operations and high performance. Handled visual layouts, stock management, and team synchronization, refining outstanding organizational and agile troubleshooting abilities in high-intensity settings."
+  },
+  {
+    "id": "exp-1",
+    "role": "Sales Executive",
+    "company": "Zink London (Pantaloons)",
+    "duration": "JUL 2023 - APR 2025",
+    "location": "Tiruppur",
+    "desc": "Drove commercial performance, client interaction, and customer satisfaction. Strengthened key skills in proactive engagement, customer relation frameworks, and data tracking, enhancing interpersonal communications and goal-focused strategic planning."
+  },
+  {
+    "id": "exp-2",
+    "role": "Sales Assistant",
+    "company": "Max Fashion India",
+    "duration": "JUN 2020 - OCT 2021",
+    "location": "Tiruppur",
+    "desc": "Assisted customers, managed shelf displays, and handled front-end transactions. Fostered collaborative capabilities, active problem resolution techniques, and customer experience methodologies."
+  }
+]
