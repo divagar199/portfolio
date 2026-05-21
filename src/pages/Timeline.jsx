@@ -1,51 +1,51 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import TiltCard from '../components/TiltCard';
-import { ShieldAlert, TrendingUp, ShoppingBag, Award, ArrowUpRight } from 'lucide-react';
+import { ShieldAlert, TrendingUp, ShoppingBag, Award, Target } from 'lucide-react';
 
 const TIMELINE_DATA = [
   {
     id: 1,
-    role: 'Floor Manager',
+    role: 'Floor Operational Commander',
     company: 'V-Mart Retail Ltd',
     period: 'Apr 2025 - Sep 2025',
     color: 'var(--color-pink)',
     icon: ShoppingBag,
-    focus: 'Operational Architecture & Team Leadership',
+    focus: 'Inventory Flow Management & Officer Leadership',
     bullets: [
-      'Directed retail operations, inventory flows, and floor layouts for maximum consumer throughput.',
-      'Analysed customer psychological behaviors to optimize product structures, similar to UX mapping in frontend engineering.',
-      'Led teams of cross-functional sales operators, driving coordination, agility, and target compliance.',
-      'Transitioned operational inventory pipelines into structured spreadsheets, initiating the spark for database management.'
+      'Directed complex supply lines, inventory depots, and floor layout optimizations.',
+      'Analysed customer behavioral logistics to optimize product distribution vectors.',
+      'Commanded teams of tactical sales operators, driving coordination, agility, and target compliance.',
+      'Transitioned operational inventory pipelines into structured databases, sparking system engineering interest.'
     ]
   },
   {
     id: 2,
-    role: 'Sales Executive',
+    role: 'Strategic Logistics Executive',
     company: 'Zink London',
     period: 'Jul 2023 - Apr 2025',
     color: 'var(--color-cyan)',
     icon: TrendingUp,
-    focus: 'Consumer Psychology & Logical Negotiation',
+    focus: 'Logistics Pipelines & Dynamic Negotiation Operations',
     bullets: [
-      'Managed corporate sales funnels, accounting logs, and wholesale logistics pipelines.',
-      'Utilized predictive patterns and historical sales metrics to forecast inventory needs and purchase orders.',
-      'Developed critical problem-solving capacities by engineering customized vendor agreements and resolve delays.',
-      'Refined communication skills and technical requirements mapping during wholesale contract drafts.'
+      'Managed corporate sales tunnels, audit ledgers, and wholesale logistical grids.',
+      'Utilized predictive models and historical indicators to forecast inventory allocations.',
+      'Engineered structured vendor agreements to resolve operational bottleneck delays.',
+      'Refined communication mappings during multi-party supply contract drafts.'
     ]
   },
   {
     id: 3,
-    role: 'Sales Assistant',
+    role: 'Operational Logistics Officer',
     company: 'Max Fashion India',
     period: 'Jun 2020 - Oct 2021',
     color: 'var(--color-violet)',
     icon: Award,
-    focus: 'Systems Organization & Inventory Logistics',
+    focus: 'Inventory Allocation & Supply Chain Security',
     bullets: [
-      'Audited supply lines, cataloged incoming inventory sheets, and managed stock allocations.',
-      'Practiced high-frequency coordination under high customer volume seasons, developing operational resilience.',
-      'Discovered structured patterns in category codes and stock IDs, developing a systems-thinking foundation.'
+      'Audited supply lanes, cataloged incoming inventory, and managed stock allocations.',
+      'Commanded rapid inventory sorting under high stress, developing coordination resilience.',
+      'Discovered structural sorting patterns in cataloging codes, establishing systems-thinking foundations.'
     ]
   }
 ];
@@ -54,17 +54,14 @@ const Timeline = () => {
   const containerRef = useRef(null);
   const [scrollProgress, setScrollProgress] = useState(0);
 
-  // Scroll tracking to draw the vertical timeline path
+  // Scroll tracking to draw the burning fuse line
   useEffect(() => {
     const handleScroll = () => {
       if (!containerRef.current) return;
       const rect = containerRef.current.getBoundingClientRect();
       const windowHeight = window.innerHeight;
       
-      // Compute progress: from when container top crosses middle of screen, to when bottom crosses middle
       const startTrigger = windowHeight * 0.75;
-      const endTrigger = windowHeight * 0.25;
-      
       const totalDist = rect.height;
       const currentScrolled = startTrigger - rect.top;
       
@@ -74,7 +71,7 @@ const Timeline = () => {
 
     window.addEventListener('scroll', handleScroll);
     window.addEventListener('resize', handleScroll);
-    handleScroll(); // Trigger early
+    handleScroll();
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
@@ -90,23 +87,24 @@ const Timeline = () => {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        style={{ textAlign: 'left', marginBottom: '60px' }}
+        style={{ textAlign: 'left', marginBottom: '50px' }}
       >
         <span style={{
-          fontSize: '0.9rem',
-          fontWeight: '600',
+          fontSize: '0.85rem',
+          fontWeight: 'bold',
           letterSpacing: '0.2em',
           textTransform: 'uppercase',
           color: 'var(--color-violet)',
-          textShadow: '0 0 10px rgba(170, 59, 255, 0.3)',
+          textShadow: '0 0 10px rgba(34, 197, 94, 0.3)',
           display: 'block',
-          marginBottom: '10px'
+          marginBottom: '10px',
+          fontFamily: 'var(--font-body)'
         }}>
-          My Journey
+          [ 🪖 LOGISTICAL CAMPAIGN EVOLUTION ]
         </span>
-        <h1 className="section-title">Evolution & Experience</h1>
+        <h1 className="section-title">Enlistment Logs</h1>
         <p className="section-subtitle">
-          From directing retail store logistics and managing business operational teams, to architecting high-frequency full-stack web applications.
+          From directing retail store logistics and managing supply depots, to weaponizing systems architecture in high-frequency MERN deployments.
         </p>
       </motion.div>
 
@@ -135,11 +133,11 @@ const Timeline = () => {
             background: 'rgba(255, 255, 255, 0.05)',
             transform: 'translateX(-50%)',
             zIndex: 1,
-            borderRadius: '4px'
+            borderRadius: '2px'
           }} 
         />
 
-        {/* Animated Drawing Path */}
+        {/* Burning Fuse Axis Line */}
         <div 
           className="timeline-axis"
           style={{
@@ -148,12 +146,12 @@ const Timeline = () => {
             top: 0,
             height: `${scrollProgress * 100}%`,
             width: '4px',
-            background: 'linear-gradient(to bottom, var(--color-pink) 0%, var(--color-cyan) 60%, var(--color-violet) 100%)',
-            boxShadow: '0 0 10px rgba(6, 182, 212, 0.5)',
+            background: 'linear-gradient(to bottom, var(--color-pink) 0%, var(--color-cyan) 60%, #ef4444 100%)',
+            boxShadow: '0 0 15px rgba(239, 68, 68, 0.65), 0 0 5px rgba(255, 150, 12, 0.4)',
             transform: 'translateX(-50%)',
             zIndex: 2,
             transition: 'height 0.1s ease-out',
-            borderRadius: '4px'
+            borderRadius: '2px'
           }} 
         />
 
@@ -184,10 +182,10 @@ const Timeline = () => {
                     transform: 'translateX(-50%)',
                     width: '36px',
                     height: '36px',
-                    borderRadius: '50%',
+                    borderRadius: '2px', // Square industrial shape
                     background: 'var(--color-bg-darker)',
-                    border: `3px solid ${scrollProgress > (idx / TIMELINE_DATA.length) ? item.color : 'rgba(255, 255, 255, 0.1)'}`,
-                    boxShadow: scrollProgress > (idx / TIMELINE_DATA.length) ? `0 0 15px ${item.color}` : 'none',
+                    border: `2px solid ${scrollProgress > (idx / TIMELINE_DATA.length) ? item.color : 'rgba(255, 255, 255, 0.1)'}`,
+                    boxShadow: scrollProgress > (idx / TIMELINE_DATA.length) ? `0 0 15px ${item.color}44` : 'none',
                     zIndex: 4,
                     display: 'flex',
                     alignItems: 'center',
@@ -211,69 +209,77 @@ const Timeline = () => {
                 >
                   <TiltCard
                     style={{
-                      padding: '30px',
+                      padding: '0px',
                       display: 'flex',
                       flexDirection: 'column',
-                      gap: '16px',
-                      textAlign: 'left'
+                      textAlign: 'left',
+                      boxShadow: '0 15px 35px rgba(0,0,0,0.8)'
                     }}
                   >
-                    
-                    {/* Period Badge */}
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <span style={{
-                        fontSize: '0.75rem',
-                        fontWeight: '700',
-                        textTransform: 'uppercase',
-                        letterSpacing: '0.1em',
-                        color: item.color,
-                        padding: '4px 10px',
-                        background: `${item.color}15`,
-                        borderRadius: '4px',
-                        border: `1px solid ${item.color}33`
+                    {/* Metal rivet corners */}
+                    <div className="bullet-hole" style={{ top: '15px', right: '15px', width: '8px', height: '8px', opacity: 0.2 }} />
+
+                    <div className={idx === 1 ? "hazard-tape-cyan" : "hazard-tape"} style={{ height: '6px' }} />
+
+                    <div style={{ padding: '24px 30px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                      
+                      {/* Period Badge */}
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <span style={{
+                          fontSize: '0.72rem',
+                          fontWeight: 'bold',
+                          textTransform: 'uppercase',
+                          letterSpacing: '0.08em',
+                          color: item.color,
+                          padding: '4px 10px',
+                          background: `${item.color}15`,
+                          border: `1.5px solid ${item.color}33`,
+                          fontFamily: 'var(--font-body)'
+                        }}>
+                          {item.period}
+                        </span>
+                      </div>
+
+                      {/* Roles Headers */}
+                      <div>
+                        <h2 style={{ fontSize: '1.45rem', fontWeight: 'bold', letterSpacing: '0.02em', color: '#ffffff' }}>
+                          {item.role}
+                        </h2>
+                        <h3 style={{ fontSize: '0.98rem', color: '#ffffff', opacity: 0.85, fontWeight: 'bold', marginTop: '2px', fontFamily: 'var(--font-body)' }}>
+                          {item.company}
+                        </h3>
+                      </div>
+
+                      {/* MERN Career Focus Segment */}
+                      <div style={{
+                        fontSize: '0.85rem',
+                        fontWeight: 'bold',
+                        color: 'rgba(255, 255, 255, 0.85)',
+                        background: 'rgba(255, 255, 255, 0.02)',
+                        borderLeft: `3px solid ${item.color}`,
+                        padding: '8px 12px',
+                        borderRadius: '0 2px 2px 0',
+                        fontFamily: 'var(--font-body)'
                       }}>
-                        {item.period}
-                      </span>
-                    </div>
+                        FOCUS: {item.focus}
+                      </div>
 
-                    {/* Roles Headers */}
-                    <div>
-                      <h2 style={{ fontSize: '1.6rem', fontWeight: '700', letterSpacing: '-0.02em' }}>
-                        {item.role}
-                      </h2>
-                      <h3 style={{ fontSize: '1.05rem', color: '#ffffff', opacity: 0.9, fontWeight: '600', marginTop: '2px' }}>
-                        {item.company}
-                      </h3>
+                      {/* Operational Achievement Points */}
+                      <ul style={{
+                        listStyle: 'none',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '8px',
+                        paddingLeft: '0'
+                      }}>
+                        {item.bullets.map((b, bIdx) => (
+                          <li key={bIdx} style={{ fontSize: '0.85rem', color: 'var(--color-text-secondary)', display: 'flex', gap: '8px', alignItems: 'flex-start', lineHeight: '1.45', fontFamily: 'var(--font-body)' }}>
+                            <span style={{ color: item.color, fontWeight: 'bold' }}>»</span>
+                            <span>{b}</span>
+                          </li>
+                        ))}
+                      </ul>
                     </div>
-
-                    {/* MERN Career Focus Segment */}
-                    <div style={{
-                      fontSize: '0.9rem',
-                      fontWeight: '600',
-                      color: 'rgba(255, 255, 255, 0.8)',
-                      background: 'rgba(255, 255, 255, 0.03)',
-                      borderLeft: `3px solid ${item.color}`,
-                      padding: '8px 12px',
-                      borderRadius: '0 6px 6px 0',
-                    }}>
-                      Focus: {item.focus}
-                    </div>
-
-                    {/* Operational Achievement Points */}
-                    <ul style={{
-                      listStyle: 'none',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      gap: '8px',
-                      paddingLeft: '0'
-                    }}>
-                      {item.bullets.map((b, bIdx) => (
-                        <li key={bIdx} style={{ fontSize: '0.85rem', color: 'var(--color-text-secondary)', display: 'flex', gap: '8px', alignItems: 'flex-start', lineHeight: '1.5' }}>
-                          <span style={{ color: item.color, fontWeight: 'bold' }}>•</span>
-                          <span>{b}</span>
-                        </li>
-                      ))}
-                    </ul>
 
                   </TiltCard>
                 </motion.div>
@@ -290,17 +296,14 @@ const Timeline = () => {
           #timeline-container {
             padding: 40px 10px !important;
           }
-          /* Align line axis to the left edge on mobile */
           .timeline-axis {
             left: 20px !important;
             transform: none !important;
           }
-          /* Align nodes to the left edge on mobile */
           .timeline-node {
             left: 20px !important;
             transform: translateX(-50%) !important;
           }
-          /* Card container displays full-width on mobile */
           .timeline-card-wrapper {
             width: calc(100% - 40px) !important;
             margin-left: 40px !important;

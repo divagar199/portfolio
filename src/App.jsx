@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import MeshBackground from './components/MeshBackground';
+import BlastParticles from './components/BlastParticles';
 import Navigation from './components/Navigation';
 import Hero from './pages/Hero';
 import Projects from './pages/Projects';
@@ -59,6 +60,9 @@ function App() {
       >
         {/* Absolute liquid background mesh */}
         <MeshBackground />
+        
+        {/* Cinematic Blast Canvas Overlay */}
+        <BlastParticles />
         
         {/* Central Component Rendering Viewport */}
         <main 

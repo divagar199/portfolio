@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Mail, ArrowRight, Terminal, Server, Code } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Mail, ArrowRight, ShieldAlert, Cpu, Terminal, Bomb } from 'lucide-react';
 import { GithubIcon as Github, LinkedinIcon as Linkedin } from '../components/BrandIcons';
+import { triggerHeavyExplosion } from '../components/BlastParticles';
 
-const TYPING_STRINGS = ["MERN Stack Developer", "Creative Engineer", "Full Stack Builder"];
+const TYPING_STRINGS = ["MERN Tactical Engineer", "Bunker Command Architect", "Systems Weaponizer"];
 
 const Hero = () => {
   const navigate = useNavigate();
@@ -13,18 +14,18 @@ const Hero = () => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [mouseOffset, setMouseOffset] = useState({ x: 0, y: 0 });
 
-  // 1. Cursor coordinate tracker for 3D parallax elements
+  // Coordinate tracker for parallax effect
   useEffect(() => {
     const handleMouseMove = (e) => {
-      const x = (e.clientX / window.innerWidth) - 0.5; // -0.5 to 0.5
-      const y = (e.clientY / window.innerHeight) - 0.5; // -0.5 to 0.5
+      const x = (e.clientX / window.innerWidth) - 0.5;
+      const y = (e.clientY / window.innerHeight) - 0.5;
       setMouseOffset({ x, y });
     };
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
-  // 2. Typing Effect Engine
+  // Flashing typing terminal script
   useEffect(() => {
     let timer;
     const currentFullText = TYPING_STRINGS[typingIndex];
@@ -33,9 +34,9 @@ const Hero = () => {
       if (!isDeleting) {
         setDisplayText(currentFullText.substring(0, displayText.length + 1));
         if (displayText === currentFullText) {
-          timer = setTimeout(() => setIsDeleting(true), 1500); // Wait before delete
+          timer = setTimeout(() => setIsDeleting(true), 1600);
         } else {
-          timer = setTimeout(tick, 100);
+          timer = setTimeout(tick, 90);
         }
       } else {
         setDisplayText(currentFullText.substring(0, displayText.length - 1));
@@ -43,7 +44,7 @@ const Hero = () => {
           setIsDeleting(false);
           setTypingIndex((prev) => (prev + 1) % TYPING_STRINGS.length);
         } else {
-          timer = setTimeout(tick, 50);
+          timer = setTimeout(tick, 45);
         }
       }
     };
@@ -52,8 +53,8 @@ const Hero = () => {
     return () => clearTimeout(timer);
   }, [displayText, isDeleting, typingIndex]);
 
-  // Style helper for 3D layers
-  const get3DStyle = (depth, rotMultiplier = 15) => ({
+  // Style builder for 3D depth
+  const get3DStyle = (depth, rotMultiplier = 12) => ({
     transform: `translate3d(${mouseOffset.x * depth}px, ${mouseOffset.y * depth}px, ${depth}px) 
                 rotateY(${mouseOffset.x * rotMultiplier}deg) 
                 rotateX(${-mouseOffset.y * rotMultiplier}deg)`,
@@ -61,100 +62,133 @@ const Hero = () => {
     transition: 'transform 0.15s cubic-bezier(0.25, 1, 0.5, 1)',
   });
 
+  // Action fire blast triggers large shockwave
+  const fireHeavyArtillery = (e) => {
+    e.stopPropagation();
+    const rect = e.currentTarget.getBoundingClientRect();
+    const blastX = rect.left + rect.width / 2;
+    const blastY = rect.top + rect.height / 2;
+    // Detonate 3 giant consecutive chain explosions
+    triggerHeavyExplosion(blastX, blastY);
+    setTimeout(() => triggerHeavyExplosion(blastX - 150, blastY - 100), 200);
+    setTimeout(() => triggerHeavyExplosion(blastX + 150, blastY + 100), 400);
+  };
+
   return (
     <section className="section-container" style={{ display: 'grid', gridTemplateColumns: '1.1fr 0.9fr', gap: '40px', alignItems: 'center', overflow: 'hidden' }}>
       
-      {/* Hero Content Left */}
+      {/* Left: Officer Badges & Telemetry Form */}
       <motion.div
         initial={{ opacity: 0, x: -50 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.8, ease: 'easeOut' }}
-        style={{ display: 'flex', flexDirection: 'column', gap: '24px', textAlign: 'left', zIndex: 10 }}
+        style={{ display: 'flex', flexDirection: 'column', gap: '22px', textAlign: 'left', zIndex: 10 }}
       >
         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-          <span style={{
-            fontSize: '1rem',
-            fontWeight: '600',
-            letterSpacing: '0.2em',
-            textTransform: 'uppercase',
-            color: 'var(--color-cyan)',
-            textShadow: '0 0 10px rgba(6, 182, 212, 0.4)'
-          }}>
-            Welcome to my matrix
-          </span>
+          {/* Officer Tag */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <span style={{
+              fontSize: '0.78rem',
+              fontWeight: 'bold',
+              letterSpacing: '0.15rem',
+              textTransform: 'uppercase',
+              color: 'var(--color-pink)',
+              background: 'rgba(255, 150, 12, 0.08)',
+              border: '1.5px solid var(--color-pink)',
+              padding: '4px 10px',
+              borderRadius: '2px',
+              fontFamily: 'var(--font-body)',
+              textShadow: '0 0 8px rgba(255, 150, 12, 0.3)'
+            }}>
+              [ 🪖 BUNKER OFFICER BADGE #0199 // SEC_09 ]
+            </span>
+          </div>
+
           <h1 style={{
-            fontSize: '4.8rem',
-            lineHeight: '1.05',
-            fontWeight: '800',
-            letterSpacing: '-0.03em',
-            background: 'linear-gradient(135deg, #ffffff 40%, var(--color-pink) 70%, var(--color-violet) 100%)',
+            fontSize: '4.2rem',
+            lineHeight: '1.1',
+            fontWeight: 'bold',
+            fontFamily: 'var(--font-heading)',
+            background: 'linear-gradient(135deg, #ffffff 40%, var(--color-pink) 70%, var(--color-cyan) 100%)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
-            filter: 'drop-shadow(0 0 30px rgba(170, 59, 255, 0.15))'
+            filter: 'drop-shadow(0 0 10px rgba(255, 10, 10, 0.1))'
           }}>
-            Hi, I'm <span className="text-neon-cyan">DIVAGAR</span>
+            COMMANDER <span className="text-neon-cyan">DIVAGAR</span>
           </h1>
         </div>
 
         {/* Dynamic Typing Title */}
         <h2 style={{
-          fontSize: '2.2rem',
-          fontWeight: '600',
-          fontFamily: 'var(--font-heading)',
+          fontSize: '2.0rem',
+          fontWeight: 'bold',
+          fontFamily: 'var(--font-body)',
           color: '#ffffff',
-          minHeight: '50px',
+          minHeight: '44px',
         }} className="cursor-typing">
           {displayText}
         </h2>
 
-        {/* Hook statement */}
+        {/* Combat Objective Copy */}
         <p style={{
-          fontSize: '1.2rem',
+          fontSize: '1.15rem',
           lineHeight: '1.7',
           color: 'var(--color-text-secondary)',
           maxWidth: '550px',
           fontFamily: 'var(--font-body)',
         }}>
-          Bridging business acumen with scalable MERN stack engineering. Transitioning operational precision into high-performance web systems.
+          Engineered to command battlefield full-stack deployments. Weaponizing MongoDB, Express, React, and Node.js (MERN) to launch secure, heavy-duty tactical systems under fire.
         </p>
 
-        {/* Action Button & Social Links */}
-        <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '30px', marginTop: '16px' }}>
-          <button 
-            className="btn-neon" 
-            onClick={() => navigate('/projects')}
-            style={{ display: 'inline-flex', gap: '12px' }}
-          >
-            Enter My Universe
-            <ArrowRight size={20} />
-          </button>
+        {/* Action Button Trigger & Heavy Detonator */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', marginTop: '10px' }}>
+          
+          <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '20px' }}>
+            <button 
+              className="btn-neon" 
+              onClick={() => navigate('/projects')}
+              style={{ display: 'inline-flex', gap: '10px' }}
+            >
+              Enter Arsenal
+              <ArrowRight size={18} />
+            </button>
+
+            {/* Firing Artillery detonate button */}
+            <button 
+              className="btn-neon-payload" 
+              onClick={fireHeavyArtillery}
+              style={{ display: 'inline-flex', gap: '10px' }}
+              className="btn-neon-payload"
+            >
+              <Bomb size={18} style={{ animation: 'pulseCore 0.8s infinite alternate' }} />
+              DETONATE ARTILLERY
+            </button>
+          </div>
 
           {/* Social connections */}
-          <div style={{ display: 'flex', gap: '15px' }}>
+          <div style={{ display: 'flex', gap: '12px', marginTop: '10px' }}>
             <a
               href="https://github.com/divagar199?tab=repositories"
               target="_blank"
               rel="noopener noreferrer"
               className="glass-card flex-center"
               style={{
-                width: '50px',
-                height: '50px',
-                borderRadius: '50%',
+                width: '46px',
+                height: '46px',
+                borderRadius: '4px',
                 border: '1px solid rgba(255, 255, 255, 0.1)',
                 boxShadow: 'none',
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.borderColor = 'var(--color-cyan)';
-                e.currentTarget.style.boxShadow = '0 0 15px rgba(6, 182, 212, 0.4)';
-                e.currentTarget.style.transform = 'translateY(-3px)';
+                e.currentTarget.style.boxShadow = '0 0 15px rgba(255, 10, 10, 0.35)';
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)';
                 e.currentTarget.style.boxShadow = 'none';
-                e.currentTarget.style.transform = 'translateY(0)';
               }}
             >
-              <Github size={20} />
+              <Github size={18} />
             </a>
             <a
               href="https://www.linkedin.com/in/divagar-m-3598b3391/"
@@ -162,57 +196,53 @@ const Hero = () => {
               rel="noopener noreferrer"
               className="glass-card flex-center"
               style={{
-                width: '50px',
-                height: '50px',
-                borderRadius: '50%',
+                width: '46px',
+                height: '46px',
+                borderRadius: '4px',
                 border: '1px solid rgba(255, 255, 255, 0.1)',
                 boxShadow: 'none',
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.borderColor = 'var(--color-pink)';
-                e.currentTarget.style.boxShadow = '0 0 15px rgba(236, 72, 153, 0.4)';
-                e.currentTarget.style.transform = 'translateY(-3px)';
+                e.currentTarget.style.boxShadow = '0 0 15px rgba(255, 150, 12, 0.35)';
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)';
                 e.currentTarget.style.boxShadow = 'none';
-                e.currentTarget.style.transform = 'translateY(0)';
               }}
             >
-              <Linkedin size={20} />
+              <Linkedin size={18} />
             </a>
             <a
               href="mailto:divagar.m.cs@gmail.com"
               className="glass-card flex-center"
               style={{
-                width: '50px',
-                height: '50px',
-                borderRadius: '50%',
+                width: '46px',
+                height: '46px',
+                borderRadius: '4px',
                 border: '1px solid rgba(255, 255, 255, 0.1)',
                 boxShadow: 'none',
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.borderColor = 'var(--color-violet)';
-                e.currentTarget.style.boxShadow = '0 0 15px rgba(170, 59, 255, 0.4)';
-                e.currentTarget.style.transform = 'translateY(-3px)';
+                e.currentTarget.style.boxShadow = '0 0 15px rgba(34, 197, 94, 0.35)';
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)';
                 e.currentTarget.style.boxShadow = 'none';
-                e.currentTarget.style.transform = 'translateY(0)';
               }}
             >
-              <Mail size={20} />
+              <Mail size={18} />
             </a>
           </div>
         </div>
       </motion.div>
 
-      {/* Hero Visual Right - Dynamic 3D Holographic Canvas */}
+      {/* Right: Damaged 3D Tactical Field-Console */}
       <motion.div
-        initial={{ opacity: 0, scale: 0.8 }}
+        initial={{ opacity: 0, scale: 0.85 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1, ease: 'easeOut', delay: 0.2 }}
+        transition={{ duration: 1, ease: 'easeOut', delay: 0.25 }}
         style={{
           position: 'relative',
           width: '100%',
@@ -225,136 +255,149 @@ const Hero = () => {
           zIndex: 5,
         }}
       >
-        {/* Layer 1: Backdrop Grid (Slow motion) */}
+        {/* Orbit radar ring 1 */}
         <div
           style={{
-            ...get3DStyle(10, 5),
+            ...get3DStyle(10, 4),
             position: 'absolute',
             width: '320px',
             height: '320px',
-            border: '2px dashed rgba(170, 59, 255, 0.25)',
+            border: '2px dashed rgba(255, 150, 12, 0.2)',
             borderRadius: '50%',
-            animation: 'spin 25s linear infinite',
+            animation: 'spin 30s linear infinite',
             zIndex: 1,
           }}
         />
 
-        {/* Layer 2: Futuristic Circle (Medium motion) */}
+        {/* Orbit radar ring 2 */}
         <div
           style={{
-            ...get3DStyle(30, 10),
+            ...get3DStyle(30, 8),
             position: 'absolute',
             width: '260px',
             height: '260px',
-            border: '1.5px solid rgba(6, 182, 212, 0.3)',
+            border: '1.5px solid rgba(259, 68, 68, 0.25)',
             borderRadius: '50%',
             borderTopColor: 'transparent',
             borderBottomColor: 'transparent',
-            animation: 'spin 12s linear infinite reverse',
+            animation: 'spin 14s linear infinite reverse',
             zIndex: 2,
           }}
         />
 
-        {/* Layer 3: Glass Code Editor Window (Fast motion, floats closest) */}
+        {/* Damaged Glass Code Editor Card */}
         <div
           className="glass-card"
           style={{
-            ...get3DStyle(70, 18),
-            width: '340px',
-            height: '220px',
-            padding: '20px',
+            ...get3DStyle(70, 15),
+            width: '350px',
+            height: '240px',
+            padding: '0px',
             display: 'flex',
             flexDirection: 'column',
-            gap: '12px',
-            textAlign: 'left',
-            boxShadow: '0 30px 60px rgba(0, 0, 0, 0.6), 0 0 30px rgba(6, 182, 212, 0.2)',
+            boxShadow: '0 30px 60px rgba(0, 0, 0, 0.8), 0 0 30px rgba(255, 10, 10, 0.15)',
             zIndex: 4,
           }}
         >
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid rgba(255, 255, 255, 0.1)', paddingBottom: '8px' }}>
-            <div style={{ display: 'flex', gap: '6px' }}>
-              <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#ff5f56' }} />
-              <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#ffbd2e' }} />
-              <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#27c93f' }} />
+          {/* Warning tape header strip */}
+          <div className="hazard-tape" />
+
+          {/* Bullet holes on terminal console */}
+          <div className="bullet-hole" style={{ top: '35px', left: '15px' }} />
+          <div className="bullet-hole" style={{ bottom: '25px', right: '15px', width: '22px', height: '22px' }} />
+          
+          {/* Shattered glass fractures */}
+          <div className="shatter-line" style={{ top: '48px', left: '26px', width: '60px', height: '1.5px', transform: 'rotate(25deg)' }} />
+          <div className="shatter-line" style={{ top: '48px', left: '26px', width: '40px', height: '1.5px', transform: 'rotate(-40deg)' }} />
+
+          <div style={{ padding: '16px 20px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid rgba(255, 255, 255, 0.1)', paddingBottom: '6px' }}>
+              <div style={{ display: 'flex', gap: '6px' }}>
+                <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#ff3b30' }} />
+                <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#ffcc00' }} />
+                <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#34c759' }} />
+              </div>
+              <span style={{ fontSize: '0.72rem', color: 'rgba(255, 255, 255, 0.4)', fontFamily: 'var(--font-body)', letterSpacing: '1px' }}>
+                bunker_readout.log
+              </span>
             </div>
-            <span style={{ fontSize: '0.75rem', color: 'rgba(255, 255, 255, 0.4)', fontFamily: 'var(--font-heading)', letterSpacing: '1px' }}>
-              divagar.js
-            </span>
+            
+            <code style={{ fontSize: '0.82rem', color: '#ffca28', fontFamily: 'var(--font-body)', background: 'none', padding: 0 }}>
+              <span style={{ color: 'var(--color-pink)' }}>const</span> <span style={{ color: 'var(--color-cyan)' }}>bunkerOutpost</span> = &#123;
+              <br />
+              &nbsp;&nbsp;sector: <span style={{ color: '#22c55e' }}>'TACTICAL_SEC_09'</span>,
+              <br />
+              &nbsp;&nbsp;artillery: <span style={{ color: '#22c55e' }}>'MERN Stack Heavy'</span>,
+              <br />
+              &nbsp;&nbsp;armor_plates: <span style={{ color: '#ef4444' }}>'48% (DAMAGED)'</span>,
+              <br />
+              &nbsp;&nbsp;coolant_temp: <span style={{ color: '#ef4444' }}>'1845°C'</span>,
+              <br />
+              &nbsp;&nbsp;payload: <span style={{ color: 'var(--color-pink)' }}>'ARMED_DEPLOYING'</span>
+              <br />
+              &#125;;
+            </code>
           </div>
-          <code style={{ fontSize: '0.85rem', color: '#ffca28', fontFamily: 'var(--font-heading)', background: 'none', padding: 0 }}>
-            <span style={{ color: 'var(--color-pink)' }}>const</span> <span style={{ color: 'var(--color-cyan)' }}>developer</span> = &#123;
-            <br />
-            &nbsp;&nbsp;name: <span style={{ color: '#46e3b7' }}>'DIVAGAR'</span>,
-            <br />
-            &nbsp;&nbsp;engine: <span style={{ color: '#46e3b7' }}>'MERN Stack'</span>,
-            <br />
-            &nbsp;&nbsp;vision: <span style={{ color: '#46e3b7' }}>'Scalable Code'</span>,
-            <br />
-            &nbsp;&nbsp;transitioned: <span style={{ color: 'var(--color-pink)' }}>true</span>
-            <br />
-            &#125;;
-          </code>
         </div>
 
-        {/* Floating Icon 1: Server (Floating left) */}
+        {/* Floating Icon 1: Heavy Shield (Floating left) */}
         <div
           className="glass-card floating-badge flex-center"
           style={{
-            ...get3DStyle(100, 22),
+            ...get3DStyle(105, 18),
             position: 'absolute',
             top: '80px',
-            left: '20px',
+            left: '15px',
             width: '60px',
             height: '60px',
-            borderRadius: '16px',
-            border: '1px solid rgba(170, 59, 255, 0.3)',
-            boxShadow: '0 10px 20px rgba(0, 0, 0, 0.4), 0 0 15px rgba(170, 59, 255, 0.2)',
+            borderRadius: '4px',
+            border: '1.5px solid rgba(255, 10, 10, 0.3)',
+            boxShadow: '0 10px 20px rgba(0, 0, 0, 0.4), 0 0 15px rgba(255, 10, 10, 0.1)',
             zIndex: 5,
           }}
         >
-          <Server size={24} style={{ color: 'var(--color-violet)' }} />
+          <ShieldAlert size={24} style={{ color: 'var(--color-cyan)' }} />
         </div>
 
-        {/* Floating Icon 2: Code (Floating right) */}
+        {/* Floating Icon 2: CPU Artillery (Floating right) */}
         <div
           className="glass-card floating-badge-delayed flex-center"
           style={{
-            ...get3DStyle(85, 20),
+            ...get3DStyle(90, 16),
             position: 'absolute',
-            bottom: '70px',
-            right: '25px',
+            bottom: '60px',
+            right: '15px',
             width: '60px',
             height: '60px',
-            borderRadius: '16px',
-            border: '1px solid rgba(6, 182, 212, 0.3)',
-            boxShadow: '0 10px 20px rgba(0, 0, 0, 0.4), 0 0 15px rgba(6, 182, 212, 0.2)',
+            borderRadius: '4px',
+            border: '1.5px solid rgba(255, 150, 12, 0.3)',
+            boxShadow: '0 10px 20px rgba(0, 0, 0, 0.4), 0 0 15px rgba(255, 150, 12, 0.1)',
             zIndex: 5,
           }}
         >
-          <Code size={24} style={{ color: 'var(--color-cyan)' }} />
+          <Cpu size={24} style={{ color: 'var(--color-pink)' }} />
         </div>
 
-        {/* Floating Icon 3: Terminal (Floating center-top) */}
+        {/* Floating Icon 3: Terminal Command (Floating top-right) */}
         <div
           className="glass-card floating-badge-fast flex-center"
           style={{
-            ...get3DStyle(110, 25),
+            ...get3DStyle(115, 20),
             position: 'absolute',
-            top: '30px',
-            right: '100px',
-            width: '50px',
-            height: '50px',
-            borderRadius: '14px',
-            border: '1px solid rgba(236, 72, 153, 0.3)',
-            boxShadow: '0 10px 20px rgba(0, 0, 0, 0.4), 0 0 15px rgba(236, 72, 153, 0.2)',
+            top: '20px',
+            right: '90px',
+            width: '52px',
+            height: '52px',
+            borderRadius: '4px',
+            border: '1.5px solid rgba(34, 197, 94, 0.3)',
+            boxShadow: '0 10px 20px rgba(0, 0, 0, 0.4), 0 0 15px rgba(34, 197, 94, 0.1)',
             zIndex: 5,
           }}
         >
-          <Terminal size={20} style={{ color: 'var(--color-pink)' }} />
+          <Terminal size={20} style={{ color: 'var(--color-violet)' }} />
         </div>
       </motion.div>
 
-      {/* CSS Animations helper inline */}
       <style>{`
         @keyframes spin {
           from { transform: rotate(0deg); }
@@ -365,8 +408,8 @@ const Hero = () => {
             grid-template-columns: 1fr !important;
             text-align: center !important;
             padding-top: 130px !important;
-            padding-bottom: 140px !important;
-            gap: 60px !important;
+            padding-bottom: 120px !important;
+            gap: 50px !important;
           }
           div[style*="text-align: left"] {
             text-align: center !important;
@@ -378,10 +421,10 @@ const Hero = () => {
         }
         @media (max-width: 640px) {
           h1 {
-            font-size: 3.2rem !important;
+            font-size: 2.8rem !important;
           }
           h2 {
-            font-size: 1.6rem !important;
+            font-size: 1.45rem !important;
           }
         }
       `}</style>

@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import TiltCard from '../components/TiltCard';
 import { Mail, MapPin, Send, MessageSquare, Terminal } from 'lucide-react';
 import { GithubIcon as Github, LinkedinIcon as Linkedin } from '../components/BrandIcons';
+import { playClick } from '../utils/audioEngine';
 
 const Contact = () => {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
@@ -16,8 +17,9 @@ const Contact = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setStatus('sending');
+    playClick();
     
-    // Simulate API connection
+    // Simulate active military channel transmit ping
     setTimeout(() => {
       setStatus('success');
       setFormData({ name: '', email: '', message: '' });
@@ -33,23 +35,24 @@ const Contact = () => {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        style={{ textAlign: 'left', marginBottom: '60px' }}
+        style={{ textAlign: 'left', marginBottom: '50px' }}
       >
         <span style={{
-          fontSize: '0.9rem',
-          fontWeight: '600',
+          fontSize: '0.85rem',
+          fontWeight: 'bold',
           letterSpacing: '0.2em',
           textTransform: 'uppercase',
           color: 'var(--color-cyan)',
-          textShadow: '0 0 10px rgba(6, 182, 212, 0.3)',
+          textShadow: '0 0 10px rgba(255, 10, 10, 0.3)',
           display: 'block',
-          marginBottom: '10px'
+          marginBottom: '10px',
+          fontFamily: 'var(--font-body)'
         }}>
-          Communication Node
+          [ 🪖 ENCRYPTED RADIO TRANSMITTER ]
         </span>
-        <h1 className="section-title">Establish Portal</h1>
+        <h1 className="section-title">Outpost Comms</h1>
         <p className="section-subtitle">
-          Initiate a connection channel. Send coordinates, queries, or job opportunities directly through the cosmic pipeline.
+          Initiate a tactical connection channel. Transmit coordinate parameters, officer requests, or reconnaissance orders across secure frequencies.
         </p>
       </motion.div>
 
@@ -57,268 +60,292 @@ const Contact = () => {
       <div style={{
         display: 'grid',
         gridTemplateColumns: '0.85fr 1.15fr',
-        gap: '50px',
+        gap: '40px',
         width: '100%',
         boxSizing: 'border-box'
       }}>
         
-        {/* Left Side: Coordinates Info Card */}
+        {/* Left: Coordinates Info */}
         <motion.div
-          initial={{ opacity: 0, x: -50 }}
+          initial={{ opacity: 0, x: -40 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
         >
           <TiltCard
             style={{
-              padding: '40px',
+              padding: '0px',
               display: 'flex',
               flexDirection: 'column',
-              gap: '30px',
               textAlign: 'left',
-              height: '100%'
+              height: '100%',
+              boxShadow: '0 15px 35px rgba(0,0,0,0.85)'
             }}
           >
-            <div>
-              <h2 style={{ fontSize: '1.8rem', fontWeight: '700', letterSpacing: '-0.02em', marginBottom: '8px' }}>
-                System Coordinates
-              </h2>
-              <p style={{ fontSize: '0.92rem', color: 'var(--color-text-secondary)', lineHeight: '1.5' }}>
-                Reach out directly via external nodes or standard emails.
-              </p>
-            </div>
+            <div className="hazard-tape" style={{ height: '6px' }} />
+            
+            {/* Screws and bullet hole */}
+            <div className="bullet-hole" style={{ top: '15px', right: '15px', width: '8px', height: '8px', opacity: 0.25 }} />
+            <div className="bullet-hole" style={{ bottom: '25px', left: '15px', width: '12px', height: '12px', opacity: 0.2 }} />
 
-            {/* List of Connection Details */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-              
-              {/* Location */}
-              <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
-                <div
-                  className="flex-center"
-                  style={{
-                    width: '45px',
-                    height: '45px',
-                    borderRadius: '10px',
-                    background: 'rgba(6, 182, 212, 0.05)',
-                    border: '1px solid rgba(6, 182, 212, 0.2)',
-                  }}
-                >
-                  <MapPin size={18} className="text-neon-cyan" />
-                </div>
-                <div style={{ display: 'flex', flexDirection: 'column' }}>
-                  <span style={{ fontSize: '0.75rem', fontWeight: '700', textTransform: 'uppercase', color: 'rgba(255, 255, 255, 0.4)' }}>Location</span>
-                  <span style={{ fontSize: '0.95rem', color: '#ffffff', fontWeight: '600' }}>Tamil Nadu, India</span>
-                </div>
+            <div style={{ padding: '40px 30px', display: 'flex', flexDirection: 'column', gap: '30px' }}>
+              <div>
+                <h2 style={{ fontSize: '1.6rem', fontWeight: 'bold', letterSpacing: '0.02em', marginBottom: '8px', color: '#ffffff' }}>
+                  Station Coordinates
+                </h2>
+                <p style={{ fontSize: '0.88rem', color: 'var(--color-text-secondary)', lineHeight: '1.5', fontFamily: 'var(--font-body)' }}>
+                  Secure communication frequencies for manual officer transmission channels.
+                </p>
               </div>
 
-              {/* Email */}
-              <a href="mailto:divagar.m.cs@gmail.com" style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
-                <div
-                  className="flex-center"
-                  style={{
-                    width: '45px',
-                    height: '45px',
-                    borderRadius: '10px',
-                    background: 'rgba(236, 72, 153, 0.05)',
-                    border: '1px solid rgba(236, 72, 153, 0.2)',
-                  }}
-                >
-                  <Mail size={18} className="text-neon-pink" />
+              {/* Coordinates List */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
+                
+                {/* Location */}
+                <div style={{ display: 'flex', gap: '14px', alignItems: 'center' }}>
+                  <div
+                    className="flex-center"
+                    style={{
+                      width: '42px',
+                      height: '42px',
+                      borderRadius: '2px',
+                      background: 'rgba(255, 10, 10, 0.05)',
+                      border: '1.5px solid rgba(255, 10, 10, 0.2)',
+                    }}
+                  >
+                    <MapPin size={16} className="text-neon-cyan" />
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', fontFamily: 'var(--font-body)' }}>
+                    <span style={{ fontSize: '0.68rem', fontWeight: 'bold', textTransform: 'uppercase', color: 'rgba(255, 255, 255, 0.4)' }}>OUTPOST REGION</span>
+                    <span style={{ fontSize: '0.9rem', color: '#ffffff', fontWeight: 'bold' }}>Tamil Nadu, India</span>
+                  </div>
                 </div>
-                <div style={{ display: 'flex', flexDirection: 'column' }}>
-                  <span style={{ fontSize: '0.75rem', fontWeight: '700', textTransform: 'uppercase', color: 'rgba(255, 255, 255, 0.4)' }}>Email Direct</span>
-                  <span style={{ fontSize: '0.95rem', color: '#ffffff', fontWeight: '600', textDecoration: 'underline' }}>divagar.m.cs@gmail.com</span>
-                </div>
-              </a>
 
-              {/* Github */}
-              <a href="https://github.com/divagar199?tab=repositories" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
-                <div
-                  className="flex-center"
-                  style={{
-                    width: '45px',
-                    height: '45px',
-                    borderRadius: '10px',
-                    background: 'rgba(170, 59, 255, 0.05)',
-                    border: '1px solid rgba(170, 59, 255, 0.2)',
-                  }}
-                >
-                  <Github size={18} className="text-neon-violet" />
-                </div>
-                <div style={{ display: 'flex', flexDirection: 'column' }}>
-                  <span style={{ fontSize: '0.75rem', fontWeight: '700', textTransform: 'uppercase', color: 'rgba(255, 255, 255, 0.4)' }}>GitHub Code</span>
-                  <span style={{ fontSize: '0.95rem', color: '#ffffff', fontWeight: '600' }}>github.com/divagar199</span>
-                </div>
-              </a>
+                {/* Email */}
+                <a href="mailto:divagar.m.cs@gmail.com" style={{ display: 'flex', gap: '14px', alignItems: 'center' }}>
+                  <div
+                    className="flex-center"
+                    style={{
+                      width: '42px',
+                      height: '42px',
+                      borderRadius: '2px',
+                      background: 'rgba(255, 150, 12, 0.05)',
+                      border: '1.5px solid rgba(255, 150, 12, 0.2)',
+                    }}
+                  >
+                    <Mail size={16} className="text-neon-pink" />
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', fontFamily: 'var(--font-body)' }}>
+                    <span style={{ fontSize: '0.68rem', fontWeight: 'bold', textTransform: 'uppercase', color: 'rgba(255, 255, 255, 0.4)' }}>SECURE TELEGRAPH</span>
+                    <span style={{ fontSize: '0.9rem', color: '#ffffff', fontWeight: 'bold', textDecoration: 'underline' }}>divagar.m.cs@gmail.com</span>
+                  </div>
+                </a>
 
-              {/* Linkedin */}
-              <a href="https://www.linkedin.com/in/divagar-m-3598b3391/" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
-                <div
-                  className="flex-center"
-                  style={{
-                    width: '45px',
-                    height: '45px',
-                    borderRadius: '10px',
-                    background: 'rgba(6, 182, 212, 0.05)',
-                    border: '1px solid rgba(6, 182, 212, 0.2)',
-                  }}
-                >
-                  <Linkedin size={18} className="text-neon-cyan" />
-                </div>
-                <div style={{ display: 'flex', flexDirection: 'column' }}>
-                  <span style={{ fontSize: '0.75rem', fontWeight: '700', textTransform: 'uppercase', color: 'rgba(255, 255, 255, 0.4)' }}>LinkedIn Net</span>
-                  <span style={{ fontSize: '0.95rem', color: '#ffffff', fontWeight: '600' }}>linkedin.com/in/divagar-m-3598b3391</span>
-                </div>
-              </a>
+                {/* Github */}
+                <a href="https://github.com/divagar199?tab=repositories" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', gap: '14px', alignItems: 'center' }}>
+                  <div
+                    className="flex-center"
+                    style={{
+                      width: '42px',
+                      height: '42px',
+                      borderRadius: '2px',
+                      background: 'rgba(34, 197, 94, 0.05)',
+                      border: '1.5px solid rgba(34, 197, 94, 0.2)',
+                    }}
+                  >
+                    <Github size={16} className="text-neon-violet" />
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', fontFamily: 'var(--font-body)' }}>
+                    <span style={{ fontSize: '0.68rem', fontWeight: 'bold', textTransform: 'uppercase', color: 'rgba(255, 255, 255, 0.4)' }}>CODE RESERVES</span>
+                    <span style={{ fontSize: '0.9rem', color: '#ffffff', fontWeight: 'bold' }}>github.com/divagar199</span>
+                  </div>
+                </a>
 
+                {/* Linkedin */}
+                <a href="https://www.linkedin.com/in/divagar-m-3598b3391/" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', gap: '14px', alignItems: 'center' }}>
+                  <div
+                    className="flex-center"
+                    style={{
+                      width: '42px',
+                      height: '42px',
+                      borderRadius: '2px',
+                      background: 'rgba(255, 10, 10, 0.05)',
+                      border: '1.5px solid rgba(255, 10, 10, 0.2)',
+                    }}
+                  >
+                    <Linkedin size={16} className="text-neon-cyan" />
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', fontFamily: 'var(--font-body)' }}>
+                    <span style={{ fontSize: '0.68rem', fontWeight: 'bold', textTransform: 'uppercase', color: 'rgba(255, 255, 255, 0.4)' }}>TACTICAL NETWORK</span>
+                    <span style={{ fontSize: '0.9rem', color: '#ffffff', fontWeight: 'bold' }}>linkedin.com/in/divagar-m-3598b3391</span>
+                  </div>
+                </a>
+
+              </div>
             </div>
           </TiltCard>
         </motion.div>
 
-        {/* Right Side: Visual Input Form Panel */}
+        {/* Right: Tactical Command Form Input Panel */}
         <motion.div
-          initial={{ opacity: 0, x: 50 }}
+          initial={{ opacity: 0, x: 40 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
           <TiltCard
             style={{
-              padding: '40px',
+              padding: '0px',
               textAlign: 'left',
               display: 'flex',
               flexDirection: 'column',
-              gap: '24px'
+              boxShadow: '0 15px 35px rgba(0,0,0,0.85)'
             }}
           >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <Terminal size={18} className="text-neon-pink" />
-              <h2 style={{ fontSize: '1.6rem', fontWeight: '700', letterSpacing: '-0.01em' }}>
-                Send Console Ping
-              </h2>
-            </div>
+            <div className="hazard-tape-cyan" style={{ height: '6px' }} />
+            
+            {/* Exposed screws */}
+            <div className="bullet-hole" style={{ top: '15px', right: '15px', width: '8px', height: '8px', opacity: 0.25 }} />
 
-            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-              
-              {/* Name */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                <label style={{ fontSize: '0.78rem', fontWeight: '700', textTransform: 'uppercase', color: 'rgba(255, 255, 255, 0.5)' }}>Name / Authority</label>
-                <input
-                  type="text"
-                  name="name"
-                  required
-                  value={formData.name}
-                  onChange={handleChange}
-                  placeholder="Enter identity label..."
-                  style={{
-                    background: 'rgba(255, 255, 255, 0.03)',
-                    border: '1px solid rgba(255, 255, 255, 0.08)',
-                    borderRadius: '8px',
-                    padding: '12px 16px',
-                    color: '#ffffff',
-                    fontSize: '0.95rem',
-                    outline: 'none',
-                    transition: 'border-color 0.3s ease, box-shadow 0.3s ease',
-                  }}
-                  className="contact-input"
-                />
+            <div style={{ padding: '36px 36px 30px 36px', display: 'flex', flexDirection: 'column', gap: '22px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <Terminal size={16} className="text-neon-pink" />
+                <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', letterSpacing: '-0.01em', color: '#ffffff' }}>
+                  Transmit Outpost Ping
+                </h2>
               </div>
 
-              {/* Email */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                <label style={{ fontSize: '0.78rem', fontWeight: '700', textTransform: 'uppercase', color: 'rgba(255, 255, 255, 0.5)' }}>Connection Email</label>
-                <input
-                  type="email"
-                  name="email"
-                  required
-                  value={formData.email}
-                  onChange={handleChange}
-                  placeholder="name@domain.com"
-                  style={{
-                    background: 'rgba(255, 255, 255, 0.03)',
-                    border: '1px solid rgba(255, 255, 255, 0.08)',
-                    borderRadius: '8px',
-                    padding: '12px 16px',
-                    color: '#ffffff',
-                    fontSize: '0.95rem',
-                    outline: 'none',
-                    transition: 'border-color 0.3s ease, box-shadow 0.3s ease',
-                  }}
-                  className="contact-input"
-                />
-              </div>
-
-              {/* Message */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                <label style={{ fontSize: '0.78rem', fontWeight: '700', textTransform: 'uppercase', color: 'rgba(255, 255, 255, 0.5)' }}>Holographic Payload</label>
-                <textarea
-                  name="message"
-                  required
-                  rows={4}
-                  value={formData.message}
-                  onChange={handleChange}
-                  placeholder="Draft system message..."
-                  style={{
-                    background: 'rgba(255, 255, 255, 0.03)',
-                    border: '1px solid rgba(255, 255, 255, 0.08)',
-                    borderRadius: '8px',
-                    padding: '12px 16px',
-                    color: '#ffffff',
-                    fontSize: '0.95rem',
-                    outline: 'none',
-                    resize: 'none',
-                    transition: 'border-color 0.3s ease, box-shadow 0.3s ease',
-                    fontFamily: 'var(--font-body)'
-                  }}
-                  className="contact-input"
-                />
-              </div>
-
-              {/* Submit Trigger */}
-              <div style={{ marginTop: '10px' }}>
-                <button
-                  type="submit"
-                  disabled={status === 'sending'}
-                  className="btn-neon"
-                  style={{ width: '100%', justifyContent: 'center' }}
-                >
-                  {status === 'sending' ? 'Transmitting Data...' : (
-                    <>
-                      Transmit Ping
-                      <Send size={16} />
-                    </>
-                  )}
-                </button>
-              </div>
-
-              {/* Feedback messages */}
-              {status === 'success' && (
-                <div style={{
-                  padding: '12px 16px',
-                  borderRadius: '6px',
-                  background: 'rgba(6, 182, 212, 0.1)',
-                  border: '1px solid rgba(6, 182, 212, 0.3)',
-                  color: 'var(--color-cyan)',
-                  fontSize: '0.88rem',
-                  fontWeight: '600',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '8px'
-                }}>
-                  <MessageSquare size={16} />
-                  Ping transmission successful! I will respond to your coordinates shortly.
+              <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                
+                {/* Name prompt */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                  <label style={{ fontSize: '0.72rem', fontWeight: 'bold', textTransform: 'uppercase', color: 'rgba(255, 255, 255, 0.5)', fontFamily: 'var(--font-body)' }}>
+                    SYS_PING_AUTHORITY &gt;
+                  </label>
+                  <input
+                    type="text"
+                    name="name"
+                    required
+                    value={formData.name}
+                    onChange={handleChange}
+                    placeholder="ENTER OFFICER OR CORPS IDENTITY..."
+                    style={{
+                      background: 'rgba(255, 255, 255, 0.02)',
+                      border: '1.5px solid rgba(255, 255, 255, 0.08)',
+                      borderRadius: '2px',
+                      padding: '12px 16px',
+                      color: '#ffffff',
+                      fontSize: '0.88rem',
+                      outline: 'none',
+                      fontFamily: 'var(--font-body)',
+                      transition: 'all 0.2s ease',
+                    }}
+                    className="contact-input"
+                  />
                 </div>
-              )}
 
-            </form>
+                {/* Email prompt */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                  <label style={{ fontSize: '0.72rem', fontWeight: 'bold', textTransform: 'uppercase', color: 'rgba(255, 255, 255, 0.5)', fontFamily: 'var(--font-body)' }}>
+                    RETURN_COMM_FREQUENCY &gt;
+                  </label>
+                  <input
+                    type="email"
+                    name="email"
+                    required
+                    value={formData.email}
+                    onChange={handleChange}
+                    placeholder="OFFICER@DOMAIN.COM"
+                    style={{
+                      background: 'rgba(255, 255, 255, 0.02)',
+                      border: '1.5px solid rgba(255, 255, 255, 0.08)',
+                      borderRadius: '2px',
+                      padding: '12px 16px',
+                      color: '#ffffff',
+                      fontSize: '0.88rem',
+                      outline: 'none',
+                      fontFamily: 'var(--font-body)',
+                      transition: 'all 0.2s ease',
+                    }}
+                    className="contact-input"
+                  />
+                </div>
+
+                {/* Message prompt */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                  <label style={{ fontSize: '0.72rem', fontWeight: 'bold', textTransform: 'uppercase', color: 'rgba(255, 255, 255, 0.5)', fontFamily: 'var(--font-body)' }}>
+                    ENCRYPTED_TELEGRAPH_PAYLOAD &gt;
+                  </label>
+                  <textarea
+                    name="message"
+                    required
+                    rows={4}
+                    value={formData.message}
+                    onChange={handleChange}
+                    placeholder="DRAFT BATTLE PAYLOAD MESSAGE CORRIDOR..."
+                    style={{
+                      background: 'rgba(255, 255, 255, 0.02)',
+                      border: '1.5px solid rgba(255, 255, 255, 0.08)',
+                      borderRadius: '2px',
+                      padding: '12px 16px',
+                      color: '#ffffff',
+                      fontSize: '0.88rem',
+                      outline: 'none',
+                      resize: 'none',
+                      fontFamily: 'var(--font-body)',
+                      transition: 'all 0.2s ease',
+                    }}
+                    className="contact-input"
+                  />
+                </div>
+
+                {/* Submit button */}
+                <div style={{ marginTop: '6px' }}>
+                  <button
+                    type="submit"
+                    disabled={status === 'sending'}
+                    className="btn-neon"
+                    style={{ width: '100%', justifyContent: 'center', borderRadius: '2px' }}
+                  >
+                    {status === 'sending' ? 'TRANSMITTING ENCRYPTED SIGNALS...' : (
+                      <>
+                        TRANSMIT SECURE PAYLOAD
+                        <Send size={14} />
+                      </>
+                    )}
+                  </button>
+                </div>
+
+                {/* Success alert prompt */}
+                {status === 'success' && (
+                  <div style={{
+                    padding: '12px 16px',
+                    borderRadius: '2px',
+                    background: 'rgba(34, 197, 94, 0.1)',
+                    border: '1.5px solid rgba(34, 197, 94, 0.3)',
+                    color: 'var(--color-violet)',
+                    fontSize: '0.82rem',
+                    fontWeight: 'bold',
+                    fontFamily: 'var(--font-body)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px'
+                  }}>
+                    <MessageSquare size={14} />
+                    TRANSMISSION ACQUIRED. OUTPOST OFFICERS NOTIFIED. STANDBY FOR SIGNAL ECHO.
+                  </div>
+                )}
+
+              </form>
+            </div>
           </TiltCard>
         </motion.div>
 
       </div>
 
-      {/* Inputs focus glows */}
+      {/* Focus outlines */}
       <style>{`
         .contact-input:focus {
-          border-color: var(--color-cyan) !important;
-          box-shadow: 0 0 10px rgba(6, 182, 212, 0.25) !important;
+          border-color: var(--color-pink) !important;
+          box-shadow: 0 0 10px rgba(255, 150, 12, 0.2) !important;
         }
         @media (max-width: 900px) {
           div[style*="grid-template-columns"] {

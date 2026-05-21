@@ -8,7 +8,7 @@ const CAROUSEL_ITEMS = [
     id: 0,
     type: 'degree',
     title: 'M.Sc. in Computer Science',
-    institution: "Park's College",
+    institution: "Park's College outpost",
     period: '2023 - 2025',
     color: 'var(--color-cyan)',
     desc: 'Advanced postgraduate specialization focused on modular systems engineering, computational intelligence, and distributed architectures.',
@@ -25,7 +25,7 @@ const CAROUSEL_ITEMS = [
     type: 'certifications',
     title: 'Professional Credentials',
     institution: 'Verified Global Authorities',
-    period: 'Active Certifications',
+    period: 'Active Credentials',
     color: 'var(--color-pink)',
     desc: 'Specialized industrial accreditations validating expert capabilities across full-stack engineering, AI operations, and operational data analytics.',
     bulletTitle: 'Earned Certifications',
@@ -39,7 +39,7 @@ const CAROUSEL_ITEMS = [
     id: 2,
     type: 'degree',
     title: 'BCA (Computer Applications)',
-    institution: "Park's College",
+    institution: "Park's College outpost",
     period: '2020 - 2023',
     color: 'var(--color-violet)',
     desc: 'Solid undergraduate foundation mastering structural logic, object-oriented concepts, core databases, and script engineering.',
@@ -66,8 +66,8 @@ const Education = () => {
   const isMobile = windowWidth < 480;
   const isTablet = windowWidth >= 480 && windowWidth < 768;
 
-  // Mathematically scale card dimensions and 3D depth spacing dynamically based on viewport widths
-  const cardHeight = isMobile ? 440 : isTablet ? 400 : 380;
+  // Mathematically scale card dimensions
+  const cardHeight = isMobile ? 450 : isTablet ? 400 : 380;
   const xOffset = isMobile ? 40 : isTablet ? 110 : 180;
   const zOffset = isMobile ? -140 : isTablet ? -160 : -180;
   const scaleOffset = isMobile ? 0.8 : 0.9;
@@ -95,24 +95,25 @@ const Education = () => {
         style={{ textAlign: 'left', marginBottom: '40px' }}
       >
         <span style={{
-          fontSize: '0.9rem',
-          fontWeight: '600',
+          fontSize: '0.85rem',
+          fontWeight: 'bold',
           letterSpacing: '0.2em',
           textTransform: 'uppercase',
           color: 'var(--color-cyan)',
-          textShadow: '0 0 10px rgba(6, 182, 212, 0.3)',
+          textShadow: '0 0 10px rgba(255, 10, 10, 0.3)',
           display: 'block',
-          marginBottom: '10px'
+          marginBottom: '10px',
+          fontFamily: 'var(--font-body)'
         }}>
-          Intellect System
+          [ 🪖 INTELLECT SENSORY RECORDS ]
         </span>
-        <h1 className="section-title">Education & Certs</h1>
+        <h1 className="section-title">Credentials Stack</h1>
         <p className="section-subtitle">
-          Academic achievements and specialized professional credentials forming the architectural foundation of my engineering intellect.
+          Academic enlistments and specialized technical credentials forming the architectural foundation of my engineering intellect.
         </p>
       </motion.div>
 
-      {/* 3D Stack Carousel Playground */}
+      {/* 3D Stack Carousel */}
       <div style={{
         position: 'relative',
         display: 'flex',
@@ -122,7 +123,7 @@ const Education = () => {
         flexGrow: 1,
         width: '100%',
         height: `${cardHeight + 100}px`,
-        marginTop: '20px',
+        marginTop: '10px',
         boxSizing: 'border-box'
       }}>
         
@@ -136,8 +137,6 @@ const Education = () => {
           transformStyle: 'preserve-3d',
         }}>
           {CAROUSEL_ITEMS.map((item) => {
-            // Compute relative index offsets for wrapping logic
-            // Offset range: -1, 0, 1 (with wrap around)
             let offset = item.id - activeIndex;
             
             if (offset > 1) offset -= CAROUSEL_ITEMS.length;
@@ -147,7 +146,6 @@ const Education = () => {
             const isBehindLeft = offset === -1;
             const isBehindRight = offset === 1;
             
-            // 3D positioning coordinates
             let translate3d = 'translate3d(0, 0, 0)';
             let rotateY = '0deg';
             let opacity = 0;
@@ -189,97 +187,100 @@ const Education = () => {
                 {/* Wrapped in Perspective TiltCard */}
                 <TiltCard
                   style={{
-                    padding: '36px',
+                    padding: '0px',
                     height: '100%',
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'space-between',
-                    border: `1px solid ${isActive ? 'rgba(255, 255, 255, 0.25)' : 'rgba(255, 255, 255, 0.08)'}`,
-                    boxShadow: isActive ? `0 25px 60px -10px rgba(0, 0, 0, 0.6), 0 0 25px ${item.color}22` : 'var(--glass-shadow)'
+                    border: `2px solid ${isActive ? 'rgba(255, 150, 12, 0.45)' : 'rgba(255, 255, 255, 0.08)'}`,
+                    boxShadow: isActive ? `0 25px 60px -10px rgba(0, 0, 0, 0.85), 0 0 25px ${item.color}22` : 'var(--glass-shadow)'
                   }}
                 >
+                  <div className="hazard-tape" style={{ height: '6px' }} />
                   
+                  {/* Exposed screws */}
+                  <div className="bullet-hole" style={{ top: '12px', right: '12px', width: '8px', height: '8px', opacity: 0.2 }} />
+
                   {/* Card Core Content */}
-                  <div>
-                    {/* Header Row */}
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '16px' }}>
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', textAlign: 'left' }}>
-                        <span style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.8rem', fontWeight: '700', textTransform: 'uppercase', color: item.color, letterSpacing: '0.05em' }}>
-                          <Calendar size={13} />
-                          {item.period}
-                        </span>
-                        <h2 style={{ fontSize: '1.7rem', fontWeight: '700', letterSpacing: '-0.02em', color: '#ffffff' }}>
-                          {item.title}
-                        </h2>
-                        <span style={{ fontSize: '0.95rem', color: 'rgba(255, 255, 255, 0.65)', fontWeight: '600' }}>
-                          {item.institution}
-                        </span>
+                  <div style={{ padding: '28px 30px', display: 'flex', flexDirection: 'column', height: '100%', justifyContent: 'space-between' }}>
+                    <div>
+                      {/* Header Row */}
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '14px' }}>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', textAlign: 'left' }}>
+                          <span style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.75rem', fontWeight: 'bold', textTransform: 'uppercase', color: item.color, letterSpacing: '0.05em', fontFamily: 'var(--font-body)' }}>
+                            <Calendar size={12} />
+                            {item.period}
+                          </span>
+                          <h2 style={{ fontSize: '1.45rem', fontWeight: 'bold', letterSpacing: '0.02em', color: '#ffffff' }}>
+                            {item.title}
+                          </h2>
+                          <span style={{ fontSize: '0.88rem', color: 'rgba(255, 255, 255, 0.65)', fontWeight: 'bold', fontFamily: 'var(--font-body)' }}>
+                            {item.institution}
+                          </span>
+                        </div>
+                        
+                        {/* Floating Circle Icon */}
+                        <div
+                          className="flex-center"
+                          style={{
+                            width: '46px',
+                            height: '46px',
+                            borderRadius: '2px',
+                            background: 'rgba(255, 255, 255, 0.03)',
+                            border: `1.5px solid ${item.color}44`,
+                          }}
+                        >
+                          <GraduationCap size={20} style={{ color: item.color }} />
+                        </div>
                       </div>
-                      
-                      {/* Floating Circle Icon */}
-                      <div
-                        className="flex-center"
-                        style={{
-                          width: '50px',
-                          height: '50px',
-                          borderRadius: '12px',
-                          background: 'rgba(255, 255, 255, 0.03)',
-                          border: `1px solid ${item.color}44`,
-                        }}
-                      >
-                        {item.type === 'degree' ? (
-                          <GraduationCap size={24} style={{ color: item.color }} />
-                        ) : (
-                          <Award size={24} style={{ color: item.color }} />
-                        )}
+
+                      {/* Desc */}
+                      <p style={{ fontSize: '0.88rem', lineHeight: '1.5', color: 'var(--color-text-secondary)', textAlign: 'left', marginBottom: '14px', fontFamily: 'var(--font-body)' }}>
+                        {item.desc}
+                      </p>
+
+                      {/* Accomplishments Bullets */}
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', textAlign: 'left' }}>
+                        <span style={{ fontSize: '0.75rem', fontWeight: 'bold', textTransform: 'uppercase', color: 'rgba(255, 255, 255, 0.45)', letterSpacing: '0.08em', display: 'flex', alignItems: 'center', gap: '6px', fontFamily: 'var(--font-body)' }}>
+                          <BookOpen size={12} style={{ color: item.color }} />
+                          {item.bulletTitle}
+                        </span>
+                        
+                        <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '6px', paddingLeft: 0 }}>
+                          {item.bullets.map((b, bIdx) => (
+                            <li key={bIdx} style={{ fontSize: '0.8rem', color: 'rgba(255, 255, 255, 0.85)', display: 'flex', gap: '8px', alignItems: 'flex-start', lineHeight: '1.35', fontFamily: 'var(--font-body)' }}>
+                              <span style={{ color: item.color, fontWeight: 'bold' }}>»</span>
+                              <span>{b}</span>
+                            </li>
+                          ))}
+                        </ul>
                       </div>
                     </div>
 
-                    {/* Desc */}
-                    <p style={{ fontSize: '0.9rem', lineHeight: '1.5', color: 'var(--color-text-secondary)', textAlign: 'left', marginBottom: '16px' }}>
-                      {item.desc}
-                    </p>
-
-                    {/* Accomplishments Bullets */}
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', textAlign: 'left' }}>
-                      <span style={{ fontSize: '0.8rem', fontWeight: '700', textTransform: 'uppercase', color: 'rgba(255, 255, 255, 0.4)', letterSpacing: '0.08em', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                        <BookOpen size={12} style={{ color: item.color }} />
-                        {item.bulletTitle}
-                      </span>
-                      
-                      <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '6px', paddingLeft: 0 }}>
-                        {item.bullets.map((b, bIdx) => (
-                          <li key={bIdx} style={{ fontSize: '0.82rem', color: 'rgba(255, 255, 255, 0.85)', display: 'flex', gap: '8px', alignItems: 'flex-start', lineHeight: '1.4' }}>
-                            <span style={{ color: item.color, fontWeight: 'bold' }}>✓</span>
-                            <span>{b}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    {/* Resume Action Button for Credentials Card */}
+                    {/* Resume Action Button */}
                     {item.type === 'certifications' && (
-                      <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'center' }}>
+                      <div style={{ marginTop: '14px', display: 'flex', justifyContent: 'center' }}>
                         <a
                           href="https://drive.google.com/file/d/1Xv9psWBoYLm2847AaEQLzf4nWMX0cuk5/view?usp=drive_link"
                           target="_blank"
                           rel="noopener noreferrer"
                           className="btn-neon"
                           style={{
-                            fontSize: '0.82rem',
-                            padding: '10px 20px',
+                            fontSize: '0.78rem',
+                            padding: '10px 18px',
                             width: '100%',
                             justifyContent: 'center',
-                            boxShadow: `0 0 15px ${item.color}33`,
+                            boxShadow: `0 0 15px ${item.color}22`,
                             transform: 'translateZ(10px)',
-                            gap: '8px'
+                            gap: '8px',
+                            borderRadius: '2px'
                           }}
                         >
-                          <span>Get My Resume</span>
+                          <span>GET COMMAND RESUME</span>
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            width="14"
-                            height="14"
+                            width="12"
+                            height="12"
                             viewBox="0 0 24 24"
                             fill="none"
                             stroke="currentColor"
@@ -302,68 +303,56 @@ const Education = () => {
         </div>
 
         {/* Carousel Navigation Controller Arrows */}
-        <div style={{ display: 'flex', gap: '20px', marginTop: '30px', zIndex: 10 }}>
+        <div style={{ display: 'flex', gap: '20px', marginTop: '24px', zIndex: 10 }}>
           <button
             onClick={handlePrev}
             className="glass-card flex-center"
             style={{
-              width: '50px',
-              height: '50px',
-              borderRadius: '50%',
-              border: '1px solid rgba(255, 255, 255, 0.08)',
-              background: 'rgba(15, 12, 28, 0.6)',
-              boxShadow: 'none',
+              width: '46px',
+              height: '46px',
+              borderRadius: '2px',
+              border: '1.5px solid rgba(255, 255, 255, 0.08)',
+              background: 'rgba(15, 23, 42, 0.65)',
               cursor: 'pointer'
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor = 'var(--color-cyan)';
-              e.currentTarget.style.boxShadow = '0 0 10px rgba(6, 182, 212, 0.2)';
+              e.currentTarget.style.borderColor = 'var(--color-pink)';
+              e.currentTarget.style.boxShadow = '0 0 10px rgba(255, 150, 12, 0.2)';
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.08)';
               e.currentTarget.style.boxShadow = 'none';
             }}
           >
-            <ChevronLeft size={24} />
+            <ChevronLeft size={20} />
           </button>
           
           <button
             onClick={handleNext}
             className="glass-card flex-center"
             style={{
-              width: '50px',
-              height: '50px',
-              borderRadius: '50%',
-              border: '1px solid rgba(255, 255, 255, 0.08)',
-              background: 'rgba(15, 12, 28, 0.6)',
-              boxShadow: 'none',
+              width: '46px',
+              height: '46px',
+              borderRadius: '2px',
+              border: '1.5px solid rgba(255, 255, 255, 0.08)',
+              background: 'rgba(15, 23, 42, 0.65)',
               cursor: 'pointer'
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor = 'var(--color-cyan)';
-              e.currentTarget.style.boxShadow = '0 0 10px rgba(6, 182, 212, 0.2)';
+              e.currentTarget.style.borderColor = 'var(--color-pink)';
+              e.currentTarget.style.boxShadow = '0 0 10px rgba(255, 150, 12, 0.2)';
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.08)';
               e.currentTarget.style.boxShadow = 'none';
             }}
           >
-            <ChevronRight size={24} />
+            <ChevronRight size={20} />
           </button>
         </div>
 
       </div>
 
-      <style>{`
-        @media (max-width: 640px) {
-          .glass-card {
-            padding: 24px !important;
-          }
-          h2 {
-            font-size: 1.35rem !important;
-          }
-        }
-      `}</style>
     </section>
   );
 };

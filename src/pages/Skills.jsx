@@ -2,25 +2,25 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import InteractiveSphere from '../components/InteractiveSphere';
 import TiltCard from '../components/TiltCard';
-import { Layout, Cpu, Terminal, Sparkles, Orbit } from 'lucide-react';
+import { Layout, Cpu, Terminal, Orbit, Crosshair, Zap, Shield } from 'lucide-react';
 
 const SKILLS_CATEGORIES = [
   {
-    title: 'Frontend Systems',
+    title: 'Frontend Infantry (UI Control)',
     icon: Layout,
-    color: 'var(--color-cyan)',
+    color: 'var(--color-pink)',
     items: ['React.js', 'Tailwind CSS', 'HTML5', 'CSS3', 'JavaScript (ES6+)']
   },
   {
-    title: 'Backend & Cloud',
+    title: 'Backend Batteries (Heavy Logistics)',
     icon: Cpu,
-    color: 'var(--color-violet)',
+    color: 'var(--color-cyan)',
     items: ['Node.js', 'Express.js', 'MongoDB', 'Firebase', 'Supabase', 'Razorpay API']
   },
   {
-    title: 'AI & Deployment',
+    title: 'AI Radar Support (Tactical Intelligence)',
     icon: Terminal,
-    color: 'var(--color-pink)',
+    color: 'var(--color-violet)',
     items: ['Prompt Engineering', 'ChatGPT', 'Gemini', 'Vercel', 'Render']
   }
 ];
@@ -34,42 +34,43 @@ const Skills = () => {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        style={{ textAlign: 'left', marginBottom: '60px' }}
+        style={{ textAlign: 'left', marginBottom: '50px' }}
       >
         <span style={{
-          fontSize: '0.9rem',
-          fontWeight: '600',
+          fontSize: '0.85rem',
+          fontWeight: 'bold',
           letterSpacing: '0.2em',
           textTransform: 'uppercase',
-          color: 'var(--color-cyan)',
-          textShadow: '0 0 10px rgba(6, 182, 212, 0.3)',
+          color: 'var(--color-pink)',
+          textShadow: '0 0 10px rgba(255, 150, 12, 0.3)',
           display: 'block',
-          marginBottom: '10px'
+          marginBottom: '10px',
+          fontFamily: 'var(--font-body)'
         }}>
-          My Arsenal
+          [ 🪖 ARTILLERY SQUAD RESERVES ]
         </span>
-        <h1 className="section-title">The Tech Orbit</h1>
+        <h1 className="section-title">Weapons & Tech</h1>
         <p className="section-subtitle">
-          An interactive catalog of languages, architectures, databases, and AI frameworks that I command to solve engineering problems.
+          Commanding isotopic stacks, backend heavy artillery grids, and AI computational radar tracking elements.
         </p>
       </motion.div>
 
       {/* Split layout */}
       <div style={{
         display: 'grid',
-        gridTemplateColumns: '1fr 1fr',
-        gap: '60px',
+        gridTemplateColumns: '1fr 1.05fr',
+        gap: '50px',
         alignItems: 'center',
         width: '100%',
         boxSizing: 'border-box'
       }}>
         
-        {/* Left Side: Category Blocks */}
+        {/* Left Side: Heavy Armored Category Panels */}
         <motion.div
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
-          style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}
+          style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}
         >
           {SKILLS_CATEGORIES.map((cat, idx) => {
             const CatIcon = cat.icon;
@@ -78,71 +79,79 @@ const Skills = () => {
               <TiltCard
                 key={idx}
                 style={{
-                  padding: '24px 30px',
+                  padding: '0px',
                   display: 'flex',
                   flexDirection: 'column',
-                  gap: '16px',
-                  textAlign: 'left'
+                  textAlign: 'left',
+                  boxShadow: '0 15px 30px rgba(0,0,0,0.6)'
                 }}
               >
-                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                  <div
-                    className="flex-center"
-                    style={{
-                      width: '40px',
-                      height: '40px',
-                      borderRadius: '10px',
-                      background: 'rgba(255, 255, 255, 0.03)',
-                      border: `1px solid ${cat.color}33`,
-                      boxShadow: `0 0 10px ${cat.color}11`
-                    }}
-                  >
-                    <CatIcon size={20} style={{ color: cat.color }} />
-                  </div>
-                  <h3 style={{ fontSize: '1.25rem', fontWeight: '700', fontFamily: 'var(--font-heading)' }}>
-                    {cat.title}
-                  </h3>
-                </div>
+                {/* Panel hazard caution header line */}
+                <div className={idx === 1 ? "hazard-tape-cyan" : "hazard-tape"} style={{ height: '6px' }} />
+                
+                {/* Panel corners screwnuts */}
+                <div className="bullet-hole" style={{ top: '12px', right: '12px', width: '8px', height: '8px', opacity: 0.2 }} />
 
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
-                  {cat.items.map((item, iIdx) => (
-                    <span
-                      key={iIdx}
+                <div style={{ padding: '24px 30px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                    <div
+                      className="flex-center"
                       style={{
-                        fontSize: '0.85rem',
-                        fontWeight: '600',
-                        padding: '6px 14px',
-                        borderRadius: '30px',
-                        background: 'rgba(15, 12, 28, 0.4)',
-                        border: '1px solid rgba(255, 255, 255, 0.06)',
-                        color: 'rgba(255, 255, 255, 0.85)',
-                        transition: 'all 0.3s ease',
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.borderColor = cat.color;
-                        e.currentTarget.style.boxShadow = `0 0 8px ${cat.color}44`;
-                        e.currentTarget.style.color = '#ffffff';
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.06)';
-                        e.currentTarget.style.boxShadow = 'none';
-                        e.currentTarget.style.color = 'rgba(255, 255, 255, 0.85)';
+                        width: '40px',
+                        height: '40px',
+                        borderRadius: '2px',
+                        background: 'rgba(255, 255, 255, 0.03)',
+                        border: `1.5px solid ${cat.color}44`,
                       }}
                     >
-                      {item}
-                    </span>
-                  ))}
+                      <CatIcon size={18} style={{ color: cat.color }} />
+                    </div>
+                    <h3 style={{ fontSize: '1.2rem', fontWeight: 'bold', fontFamily: 'var(--font-heading)', color: '#ffffff' }}>
+                      {cat.title}
+                    </h3>
+                  </div>
+
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+                    {cat.items.map((item, iIdx) => (
+                      <span
+                        key={iIdx}
+                        style={{
+                          fontSize: '0.8rem',
+                          fontWeight: 'bold',
+                          padding: '6px 12px',
+                          borderRadius: '2px',
+                          background: 'rgba(15, 23, 42, 0.65)',
+                          border: '1.5px solid rgba(255, 255, 255, 0.06)',
+                          color: 'rgba(255, 255, 255, 0.8)',
+                          fontFamily: 'var(--font-body)',
+                          transition: 'all 0.2s ease',
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.borderColor = cat.color;
+                          e.currentTarget.style.boxShadow = `0 0 8px ${cat.color}33`;
+                          e.currentTarget.style.color = '#ffffff';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.06)';
+                          e.currentTarget.style.boxShadow = 'none';
+                          e.currentTarget.style.color = 'rgba(255, 255, 255, 0.8)';
+                        }}
+                      >
+                        {item}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </TiltCard>
             );
           })}
         </motion.div>
 
-        {/* Right Side: Interactive Tag Sphere */}
+        {/* Right Side: Artillery Radar Sweep Guide Bounds */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
+          initial={{ opacity: 0, scale: 0.85 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
+          transition={{ duration: 0.8, delay: 0.25 }}
           style={{
             display: 'flex',
             flexDirection: 'column',
@@ -158,7 +167,7 @@ const Skills = () => {
               position: 'absolute',
               width: '460px',
               height: '460px',
-              border: '1px dashed rgba(6, 182, 212, 0.1)',
+              border: '1.5px dashed rgba(255, 10, 10, 0.1)',
               borderRadius: '50%',
               pointerEvents: 'none',
               animation: 'spin 40s linear infinite',
@@ -167,21 +176,21 @@ const Skills = () => {
           <div
             style={{
               position: 'absolute',
-              width: '400px',
-              height: '400px',
-              border: '1px solid rgba(170, 59, 255, 0.05)',
+              width: '390px',
+              height: '390px',
+              border: '1.5px solid rgba(255, 150, 12, 0.08)',
               borderRadius: '50%',
               pointerEvents: 'none',
               animation: 'spin 20s linear infinite reverse',
             }}
           />
           
-          {/* Active 3D Math Sphere */}
+          {/* 3D Math Sphere */}
           <InteractiveSphere />
           
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '20px', color: 'var(--color-text-muted)', fontSize: '0.85rem', fontWeight: '500' }}>
-            <Orbit size={14} className="text-neon-cyan" style={{ animation: 'spin 4s linear infinite' }} />
-            <span>Interactive Space. Drag or hover to navigate stars.</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '20px', color: 'var(--color-text-muted)', fontSize: '0.82rem', fontWeight: 'bold', fontFamily: 'var(--font-body)' }}>
+            <Crosshair size={14} className="text-neon-cyan" style={{ animation: 'spin 6s linear infinite' }} />
+            <span>RADAR FIELD CONSOLE. TAP TACTICAL LABELS FOR CALIBRATION.</span>
           </div>
         </motion.div>
 
@@ -199,12 +208,6 @@ const Skills = () => {
           }
           div[style*="justify-content: center"] {
             margin-top: 20px;
-          }
-        }
-        @media (max-width: 500px) {
-          .sphere-tag {
-            padding: 8px 14px !important;
-            font-size: 0.8rem !important;
           }
         }
       `}</style>

@@ -1,35 +1,71 @@
-/* Core Visual Tokens & Global Variable Declarations */
-:root {
-  --color-violet: hsla(260, 100%, 65%, 1);
-  --color-pink: hsla(320, 100%, 60%, 1);
-  --color-cyan: hsla(185, 100%, 50%, 1);
-  
-  --color-bg-dark: hsla(240, 30%, 5%, 1);
-  --color-bg-darker: hsla(240, 35%, 3%, 1);
-  
-  --color-text-primary: #ffffff;
-  --color-text-secondary: #a1a1aa;
-  --color-text-muted: #71717a;
-  
-  --font-heading: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+/* Import rugged tactical fonts */
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Special+Elite&display=swap');
 
-  --glass-bg: rgba(15, 12, 28, 0.45);
-  --glass-border: rgba(255, 255, 255, 0.08);
-  --glass-hover-border: rgba(255, 255, 255, 0.2);
-  --glass-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.5);
+:root {
+  --color-violet: hsla(120, 100%, 42%, 1);  /* Radiation Green */
+  --color-pink: hsla(38, 100%, 48%, 1);    /* Outpost Warning Amber */
+  --color-cyan: hsla(10, 100%, 48%, 1);    /* Battle-Alert Red-Orange */
   
-  --neon-violet-shadow: 0 0 15px rgba(170, 59, 255, 0.35);
-  --neon-cyan-shadow: 0 0 15px rgba(6, 182, 212, 0.35);
+  --color-bg-dark: hsla(240, 6%, 8%, 1);    /* Carbon Bunker Ash */
+  --color-bg-darker: hsla(240, 10%, 4%, 1);  /* Solid Iron Ore black */
+  
+  --color-text-primary: #f1f5f9;
+  --color-text-secondary: #cbd5e1;
+  --color-text-muted: #64748b;
+  
+  /* Fonts */
+  --font-heading: 'Special Elite', 'Courier New', Courier, monospace; /* Vintage Stencil Typewriter */
+  --font-body: 'Share Tech Mono', monospace;                         /* Cybernetic HUD telemetry */
+
+  --glass-bg: rgba(14, 16, 20, 0.88);
+  --glass-border: rgba(38, 100%, 48%, 0.15);
+  --glass-hover-border: rgba(10, 100%, 48%, 0.5);
+  --glass-shadow: 0 15px 45px -10px rgba(0, 0, 0, 0.95);
+  
+  --neon-violet-shadow: 0 0 15px rgba(120, 255, 120, 0.25);
+  --neon-cyan-shadow: 0 0 15px rgba(255, 10, 10, 0.35);
 }
 
-/* Global Reset & Base Styling */
+/* Global Subtle CRT Scanline overlay + screen flicker for active command terminal */
+html::after {
+  content: " ";
+  display: block;
+  position: fixed;
+  top: 0; left: 0; bottom: 0; right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.28) 50%);
+  z-index: 99999;
+  background-size: 100% 4px;
+  pointer-events: none;
+  opacity: 0.85;
+  animation: crtFlicker 0.2s infinite;
+}
+
+@keyframes crtFlicker {
+  0%, 100% { opacity: 0.85; }
+  50% { opacity: 0.82; }
+}
+
+/* 1. Battlefield Detonation Screen Shake keyframes */
+@keyframes warScreenShake {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  10% { transform: translate(-3px, 4px) rotate(-1deg); }
+  30% { transform: translate(4px, -3px) rotate(1deg); }
+  50% { transform: translate(-4px, -2px) rotate(-0.5deg); }
+  70% { transform: translate(3px, 3px) rotate(1deg); }
+  90% { transform: translate(-2px, 1px) rotate(0deg); }
+}
+
+.shake-active {
+  animation: warScreenShake 0.45s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+/* Global Reset & Tactical Layout base */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
   scrollbar-width: thin;
-  scrollbar-color: var(--color-violet) var(--color-bg-darker);
+  scrollbar-color: var(--color-pink) var(--color-bg-darker);
 }
 
 html {
@@ -46,132 +82,181 @@ body {
   min-height: 100vh;
   position: relative;
   overflow-x: hidden;
+  background-image: radial-gradient(circle at 50% 50%, rgba(20, 24, 30, 0.85) 0%, rgba(8, 8, 12, 0.98) 100%);
 }
 
-/* Custom Scrollbar for Chrome, Safari & Edge */
+/* Custom Tactical Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 10px;
 }
 ::-webkit-scrollbar-track {
   background: var(--color-bg-darker);
+  border-left: 1px solid rgba(255, 255, 255, 0.05);
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--color-violet);
-  border-radius: 4px;
+  background: var(--color-pink);
+  border: 2px solid var(--color-bg-darker);
+  border-radius: 2px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-pink);
+  background: var(--color-cyan);
 }
 
-/* Heading Styling */
+/* Stencil Headers */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
-  letter-spacing: -0.02em;
+  letter-spacing: 0.02em;
   font-weight: 700;
   color: var(--color-text-primary);
+  text-transform: uppercase;
 }
 
 a {
   color: inherit;
   text-decoration: none;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Core Glassmorphism Card System */
+/* 2. Heavy Steel Armor Card Styling */
 .glass-card {
   background: var(--glass-bg);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid var(--glass-border);
-  border-radius: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.08);
+  border-radius: 4px; /* Industrial sharp corners */
   box-shadow: var(--glass-shadow);
-  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   position: relative;
   overflow: hidden;
 }
 
-.glass-card::before {
-  content: '';
+/* Add metal rivets in corners of panels */
+.glass-card::after {
+  content: "•";
+  font-family: Arial, sans-serif;
+  color: rgba(255, 255, 255, 0.3);
+  text-shadow: 0 1px 0 #000;
   position: absolute;
-  top: 0;
-  left: -50%;
-  width: 200%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.05),
-    transparent
-  );
-  transform: skewX(-15deg);
-  transition: 0.75s;
+  font-size: 14px;
+  top: 4px;
+  right: 6px;
   pointer-events: none;
 }
 
-.glass-card:hover::before {
-  left: 120%;
+.glass-card::before {
+  content: "•";
+  font-family: Arial, sans-serif;
+  color: rgba(255, 255, 255, 0.3);
+  text-shadow: 0 1px 0 #000;
+  position: absolute;
+  font-size: 14px;
+  top: 4px;
+  left: 6px;
+  pointer-events: none;
 }
 
 .glass-card:hover {
-  border-color: var(--glass-hover-border);
-  box-shadow: 0 15px 45px -10px rgba(0, 0, 0, 0.7);
-  transform: translateY(-4px);
+  border-color: var(--color-pink);
+  box-shadow: 0 0 20px rgba(255, 150, 12, 0.18), var(--glass-shadow);
+  transform: translateY(-2px);
 }
 
-/* Interactive Neon Pulsing Buttons */
+/* 3. Military Caution Hazard Ribbon Stripes */
+.hazard-tape {
+  height: 10px;
+  background: repeating-linear-gradient(
+    -45deg,
+    #000 0px,
+    #000 12px,
+    var(--color-pink) 12px,
+    var(--color-pink) 24px
+  );
+  border-bottom: 1.5px solid #000;
+  width: 100%;
+}
+
+.hazard-tape-cyan {
+  height: 10px;
+  background: repeating-linear-gradient(
+    -45deg,
+    #000 0px,
+    #000 12px,
+    var(--color-cyan) 12px,
+    var(--color-cyan) 24px
+  );
+  border-bottom: 1.5px solid #000;
+  width: 100%;
+}
+
+/* 4. Heavy Brass Interactive Toggle Button */
 .btn-neon {
   position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   padding: 14px 28px;
   font-family: var(--font-heading);
-  font-weight: 600;
-  font-size: 1rem;
-  letter-spacing: 0.05em;
+  font-weight: bold;
+  font-size: 0.9rem;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: #fff;
-  background: linear-gradient(135deg, var(--color-violet), var(--color-pink));
-  border: none;
-  border-radius: 50px;
+  background: #1e293b;
+  border: 2px solid var(--color-pink);
+  border-radius: 2px;
   cursor: pointer;
   z-index: 1;
   overflow: hidden;
-  box-shadow: var(--neon-violet-shadow);
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.btn-neon::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(135deg, var(--color-cyan), var(--color-violet));
-  opacity: 0;
-  z-index: -1;
-  transition: opacity 0.5s ease;
+  box-shadow: 0 4px 0 #0f172a, 0 0 10px rgba(255, 150, 12, 0.15);
+  transition: all 0.1s ease;
 }
 
 .btn-neon:hover {
-  transform: scale(1.05) translateY(-2px);
-  box-shadow: 0 0 25px rgba(236, 72, 153, 0.6);
-}
-
-.btn-neon:hover::after {
-  opacity: 1;
+  background: #334155;
+  transform: translateY(1px);
+  box-shadow: 0 3px 0 #0f172a, 0 0 15px rgba(255, 150, 12, 0.3);
 }
 
 .btn-neon:active {
-  transform: scale(0.98) translateY(0);
+  transform: translateY(4px);
+  box-shadow: 0 0 0 #0f172a, 0 0 5px rgba(255, 150, 12, 0.2);
 }
 
-/* Text Typing Effect Cursor */
+/* Heavy Detonator Button */
+.btn-neon-payload {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 18px 36px;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 1.1rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #ffffff;
+  background: radial-gradient(circle, #b91c1c 20%, #7f1d1d 90%);
+  border: 3px solid var(--color-cyan);
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: 0 6px 0 #450a0a, 0 0 25px rgba(239, 68, 68, 0.4);
+  transition: all 0.1s ease;
+}
+
+.btn-neon-payload:hover {
+  background: radial-gradient(circle, #dc2626 20%, #991b1b 90%);
+  transform: translateY(2px);
+  box-shadow: 0 4px 0 #450a0a, 0 0 35px rgba(239, 68, 68, 0.6);
+}
+
+.btn-neon-payload:active {
+  transform: translateY(6px);
+  box-shadow: 0 0 0 #450a0a, 0 0 10px rgba(239, 68, 68, 0.4);
+}
+
+/* Typing flashing prompt */
 .cursor-typing::after {
-  content: '|';
-  margin-left: 4px;
-  color: var(--color-cyan);
+  content: ' _';
+  font-weight: 800;
+  color: var(--color-pink);
   animation: blink 0.8s infinite;
 }
 
@@ -180,113 +265,26 @@ a {
   50% { opacity: 0; }
 }
 
-/* Neon Text Glow Utilities */
+/* Tactical Glowing Red Warnings */
 .text-neon-cyan {
-  text-shadow: 0 0 8px rgba(6, 182, 212, 0.6), 0 0 20px rgba(6, 182, 212, 0.2);
+  text-shadow: 0 0 8px rgba(239, 68, 68, 0.6), 0 0 18px rgba(239, 68, 68, 0.2);
   color: var(--color-cyan);
 }
 
 .text-neon-pink {
-  text-shadow: 0 0 8px rgba(236, 72, 153, 0.6), 0 0 20px rgba(236, 72, 153, 0.2);
+  text-shadow: 0 0 8px rgba(245, 158, 11, 0.6), 0 0 18px rgba(245, 158, 11, 0.2);
   color: var(--color-pink);
 }
 
 .text-neon-violet {
-  text-shadow: 0 0 8px rgba(170, 59, 255, 0.6), 0 0 20px rgba(170, 59, 255, 0.2);
+  text-shadow: 0 0 8px rgba(34, 197, 94, 0.6), 0 0 18px rgba(34, 197, 94, 0.2);
   color: var(--color-violet);
 }
 
-/* High-Performance Moving Gradient Mesh Background CSS */
-.mesh-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: -10;
-  overflow: hidden;
-  background-color: var(--color-bg-darker);
-}
-
-.mesh-orb {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(120px);
-  opacity: 0.45;
-  mix-blend-mode: screen;
-  pointer-events: none;
-}
-
-.mesh-orb-1 {
-  top: -10%;
-  left: -10%;
-  width: 60vw;
-  height: 60vw;
-  background: radial-gradient(circle, var(--color-violet) 0%, transparent 70%);
-  animation: floatOrb1 25s infinite alternate ease-in-out;
-}
-
-.mesh-orb-2 {
-  bottom: -15%;
-  right: -5%;
-  width: 65vw;
-  height: 65vw;
-  background: radial-gradient(circle, var(--color-pink) 0%, transparent 70%);
-  animation: floatOrb2 30s infinite alternate ease-in-out;
-}
-
-.mesh-orb-3 {
-  top: 30%;
-  right: 15%;
-  width: 50vw;
-  height: 50vw;
-  background: radial-gradient(circle, var(--color-cyan) 0%, transparent 70%);
-  animation: floatOrb3 22s infinite alternate ease-in-out;
-}
-
-@keyframes floatOrb1 {
-  0% { transform: translate(0, 0) scale(1) rotate(0deg); }
-  50% { transform: translate(8%, 12%) scale(1.1) rotate(180deg); }
-  100% { transform: translate(-5%, -5%) scale(0.9) rotate(360deg); }
-}
-
-@keyframes floatOrb2 {
-  0% { transform: translate(0, 0) scale(0.95) rotate(0deg); }
-  50% { transform: translate(-10%, -8%) scale(1.05) rotate(-180deg); }
-  100% { transform: translate(5%, 10%) scale(1) rotate(-360deg); }
-}
-
-@keyframes floatOrb3 {
-  0% { transform: translate(0, 0) scale(1) rotate(0deg); }
-  50% { transform: translate(-12%, 10%) scale(0.9) rotate(90deg); }
-  100% { transform: translate(10%, -10%) scale(1.1) rotate(180deg); }
-}
-
-/* Floating Badges Animation in Hero & General Pages */
-@keyframes float {
-  0% { transform: translateY(0px) rotate(0deg); }
-  50% { transform: translateY(-10px) rotate(2deg); }
-  100% { transform: translateY(0px) rotate(0deg); }
-}
-
-.floating-badge {
-  animation: float 4s infinite ease-in-out;
-}
-
-.floating-badge-delayed {
-  animation: float 4s infinite ease-in-out;
-  animation-delay: 1.5s;
-}
-
-.floating-badge-fast {
-  animation: float 3s infinite ease-in-out;
-  animation-delay: 0.5s;
-}
-
-/* Standard Section Layout styling */
+/* Standard Section Layout */
 .section-container {
   min-height: 100vh;
-  padding: 100px 8% 120px 8%;
+  padding: 120px 8% 120px 8%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -295,10 +293,10 @@ a {
 }
 
 .section-title {
-  font-size: 3.5rem;
+  font-size: 3.2rem;
   font-weight: 700;
   margin-bottom: 20px;
-  background: linear-gradient(135deg, #fff 30%, var(--color-cyan) 100%);
+  background: linear-gradient(135deg, #fff 40%, var(--color-pink) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   display: inline-block;
@@ -309,31 +307,93 @@ a {
   color: var(--color-text-secondary);
   margin-bottom: 50px;
   max-width: 600px;
-  line-height: 1.6;
+  line-height: 1.7;
 }
 
-/* Utilities for flex-centering */
+/* Flex utilities */
 .flex-center {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-/* Responsive Grid Adjustments */
+/* 5. Bullet hole SVG decals */
+.bullet-hole {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  background: radial-gradient(circle, #1e293b 10%, #020617 40%, transparent 60%);
+  border: 1px dashed rgba(255, 255, 255, 0.15);
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0.65;
+}
+
+/* 6. Shattered glass lines overlay */
+.shatter-line {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.2);
+  pointer-events: none;
+}
+
+/* Mesh Background grid replacement (radar grids) */
+.mesh-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -10;
+  overflow: hidden;
+  background-color: var(--color-bg-darker);
+  /* Tactical target coordinate grid */
+  background-image: 
+    linear-gradient(rgba(255, 150, 12, 0.015) 1.5px, transparent 1.5px),
+    linear-gradient(90deg, rgba(255, 150, 12, 0.015) 1.5px, transparent 1.5px);
+  background-size: 60px 60px;
+  background-position: center center;
+}
+
+.mesh-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(140px);
+  opacity: 0.15;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+.mesh-orb-1 {
+  top: 5%;
+  left: 10%;
+  width: 50vw;
+  height: 50vw;
+  background: radial-gradient(circle, var(--color-cyan) 0%, transparent 70%);
+}
+
+.mesh-orb-2 {
+  bottom: 5%;
+  right: 10%;
+  width: 55vw;
+  height: 55vw;
+  background: radial-gradient(circle, var(--color-pink) 0%, transparent 70%);
+}
+
+/* Responsive constraints */
 @media (max-width: 1024px) {
   .section-container {
-    padding: 80px 5% 100px 5%;
+    padding: 100px 5% 100px 5%;
   }
   .section-title {
-    font-size: 2.8rem;
+    font-size: 2.6rem;
   }
 }
 
 @media (max-width: 768px) {
   .section-container {
-    padding: 80px 4% 90px 4%;
+    padding: 100px 4% 90px 4%;
   }
   .section-title {
-    font-size: 2.2rem;
+    font-size: 2.0rem;
   }
 }
