@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: portfolio-backend
+    runtime: node
+    repo: https://github.com/divagar199/portfolio.git
+    branch: main
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: PORT
+        value: 5000
+      - key: NODE_ENV
+        value: production
+    disk:
+      name: portfolio-db-volume
+      mountPath: /opt/render/project/src/data
+      sizeGB: 1
