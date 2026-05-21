@@ -3,7 +3,7 @@ import CoderAvatar from './components/CoderAvatar';
 import ProjectCard from './components/ProjectCard';
 import AdminPortal from './components/AdminPortal';
 
-const API_BASE = 'http://localhost:5000';
+const API_BASE = import.meta.env.VITE_API_URL || 'https://portfolio-backend-dru5.onrender.com';
 
 const App = () => {
   // Preloader and loading percentages

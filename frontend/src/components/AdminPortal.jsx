@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-const API_BASE = 'http://localhost:5000';
+const API_BASE = import.meta.env.VITE_API_URL || 'https://portfolio-backend-dru5.onrender.com';
 
 const AdminPortal = ({ isOpen, onClose, projects, onRefresh, onNotify }) => {
   const [activeScreen, setActiveScreen] = useState('login'); // 'login' | 'dashboard' | 'form'
