@@ -1,0 +1,18 @@
+{
+  "name": "portfolio-divagar",
+  "version": "2.0.0",
+  "description": "Interactive MERN stack developer portfolio for Divagar M",
+  "scripts": {
+    "dev:frontend": "npm run dev --prefix frontend",
+    "dev:backend": "npm start --prefix backend"
+  },
+  "keywords": [
+    "portfolio",
+    "mern",
+    "react",
+    "express",
+    "mongodb"
+  ],
+  "author": "Divagar M",
+  "license": "ISC"
+}
